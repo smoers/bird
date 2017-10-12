@@ -1,0 +1,11 @@
+main.menu.main.author: Auteurs
+main.menu.main.cycle: Cycles
+main.menu.main.book: Livres
+main.menu.add: Ajouter
+main.menu.edit: Modifier
+main.menu.delete: Supprimer
+main.menu.help: Aide
+modal.messages.add.book: S'agit-il d'un livre faisant partie d'un cycle ?
+modal.messages.btn.yes: Oui
+modal.messages.btn.no: Non
+

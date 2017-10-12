@@ -1,0 +1,21 @@
+{#
+User: a49974
+Date: 22/06/2017
+ #}
+
+{% trans_default_domain "BirdBundleCommon" %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            <ul>
+                {% for error in errors %}
+                    <div class="alert alert-warning fade-in">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>{{ 'message.warning'|trans }} !   </strong>{{ error.origin.config.attributes['data_collector/passed_options']['label']|trans({},'BirdBundleAuthor') }} "{{ error.messageParameters['{{ value }}'] }}"  ::  {{ error.message }}
+                    </div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}

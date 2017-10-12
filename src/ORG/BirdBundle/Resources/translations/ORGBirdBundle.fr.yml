@@ -1,0 +1,27 @@
+main.title: 'Tableau de bord'
+main.author.title: 'Liste des auteurs'
+main.author.add: Ajouter
+main.author.edit: Editer
+main.author.detail: Détail
+main.author.delete: Supprimer
+main.author.lastname: Nom
+main.author.firstname: Prénom
+main.author.bornlastname: 'Nom Civil'
+main.author.bornfirstname: 'Prénom Civil'
+main.author.comment: Commentaire
+main.author.creationdate: 'Date Création'
+main.author.loading.msg: 'Chargement des données'
+main.author.alph.all: TA
+main.cycle.title.layout: 'Liste des cycles / livres'
+main.cycle.title: Titre
+main.cycle.yncycle: Cycle
+main.cycle.nbrvolume: 'Nbr Tome'
+main.book.title.layout: 'Liste des livres'
+main.book.title: Titre
+main.book.volume: Tome
+main.book.format: Format
+main.book.editor: Editeur
+main.book.collection: Collection
+author.add: Ajout d'un auteur
+book.add: Ajout d'un livre pour
+modal.messages.btn.close: Fermer

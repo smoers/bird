@@ -1,0 +1,111 @@
+{% extends "::layout.html.twig" %}
+{% trans_default_domain "ORGBirdBundle" %}
+
+{% block javascripts %}
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+{% endblock %}  
+
+{% block body %}
+
+{# Main block#}
+ <div class="container" style="height:100%">
+ 	{# Header #}
+	{% if app.request.attributes.get('_route') != 'fos_user_security_login' %}
+		{# MenuDisabledTwig #}
+		<div class="container" style="margin-top: 10px">
+			<div class="navbar-wrapper">
+				<div class="container-fluid">
+					<nav class="navbar navbar-fixed-top">
+						<div class="container">
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>
+								<a class="navbar-brand" href="#">
+									{% image '@ORGBirdBundle/Resources/public/images/logo-cloud-blue.png' %}
+										<img src="{{ asset_url }}">
+									{% endimage %}
+								</a>
+
+							</div>
+							<div id="navbar" class="navbar-collapse collapse">
+								{# L'affichage du menu de la page se fait dans ce bloc#}
+								{% block menu %}
+								{% endblock %}
+							</div>
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>
+		{# Message #}
+		<div class="container" style="margin-top: 50px;">
+			<div class="row">
+				<div class="text-left col-md-12">
+				{% block bird_title_notice %}
+					{% if app.session.flashbag.peekAll|length > 0 %}
+						{% for type, messages in app.session.flashbag.all %}
+							{% for message in messages %}
+								<div class="alert alert-{{ type ? type : '' }} fade-in">
+									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+									<strong>{{ type ? type : '' }}!</strong> {{ message }}
+								</div>
+							{% endfor %}
+						{% endfor %}
+					{% endif %}
+				{% endblock %}
+				</div>
+			</div>
+		</div>
+		{# Titre de la page #}
+		<div class="container" style="margin-top: 5px">
+			<div class="row h4 text-center" style="color: white">
+				{% block page_title %}
+					{% if title is not defined %}
+						{% set title = 'title' %}
+					{% endif %}
+					{% if title_comment is not defined %}
+                        {% set title_comment = '' %}
+                    {% endif %}
+					{{ title|trans|raw ~ ' ' ~ title_comment|raw}}
+				{% endblock %}
+			</div>
+		</div>
+		{# Contenu de la page #}
+		<div class="container" style="margin-top: 0px">
+			{# Bird data block#}
+			{% block bird_body %}
+			{% endblock %}
+		</div>
+	{% endif %}
+	 {# Formulaire d'authentification #}
+	<div class="container">
+		{% block fos_user_content %}
+		{% endblock fos_user_content %}
+	</div>
+</div>
+
+<!-- Modal pour les messages utilisateurs-->
+<div class="modal fade" id="modalMessages" role="dialog">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title" id="modalMessages_title">Modal Header</h4>
+			</div>
+			<div class="modal-body">
+				<p id="modalMessages_content">This is a small modal.</p>
+			</div>
+			<div class="modal-footer" id="modalMessages_footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ 'modal.messages.btn.close'|trans }}</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+services:
+#    bird.example:
+#        class: ORG\BirdBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

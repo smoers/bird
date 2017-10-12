@@ -1,0 +1,140 @@
+{#
+User: a49974
+Date: 9/08/2017
+ #}
+{% extends "ORGBirdBundle::layout.html.twig" %}
+{% trans_default_domain "ORGBirdBundleCycleBook" %}
+
+{% block menu %}
+    {% include 'ORGBirdBundle:Menu:mainmenu.html.twig' %}
+{% endblock %}
+
+{% block bird_body %}
+    <div class="well">
+
+    {% form_theme form 'ORGBirdBundle:Form:form_errors.html.twig' %}
+    {{ form_start(form, {'attr': {'class': 'form-horizontal', 'id': 'form'}}) }}
+        <table style="width: 100%">
+            <tr>
+                <td colspan="2">
+                    {{ form_errors(form) }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 25%;vertical-align: top; text-align: center;">
+                    <div class="well well-sm">{{ 'form.cyclebook.image'|trans }}</div>
+                    <div class="well well-sm" style="cursor: zoom-in" id="img_author">
+                        {% if imageroot.fullpath is null %}
+                            {% image '@ORGBirdBundle/Resources/public/images/default-book.png'  %}
+                            <img src="{{ asset_url }}" style="height: 142px; max-width: 250px" id="thumb">
+                            {% endimage %}
+                        {% else %}
+                            <img src="{{ asset(imageroot.fullpath) }}"  style="height: 142px; max-width: 250px" id="thumb">
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {#{{ form_label(form.image, 'form.author.image'|trans~" :",{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}#}
+                        {{ form_errors(form.image) }}
+                        <div class="col-sm-12">
+                            {{ form_widget(form.image, {'attr': {'class': 'form-control input-sm'}}) }}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        {{ form_label(form.title, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                        {{ form_errors(form.title) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.title, {'attr': {'class': 'form-control input-sm'}}) }}
+                        </div>
+                    </div>
+                    <div style="margin-left: 20px; margin-bottom: 20px">
+                        <ul class="nav nav-tabs">
+                            <li class="active"  style="border: none"><a href="#tab1default" data-toggle="pill">{{ 'form.cyclebook.tab.1'|trans }}</a></li>
+                            <li  style="border: none"><a href="#tab2default" data-toggle="pill">{{ 'form.cyclebook.tab.2'|trans }}</a></li>
+                        </ul>
+                        {# Start TAB #}
+                        <div style="border: #dddddd 2px solid; padding: 10px; ">
+                            <div class="tab-content" style="">
+                                {#Tab 1#}
+                                <div class="tab-pane fade in active" id="tab1default">
+                                    <div class="form-group">
+                                        {{ form_label(form.cycle.type, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                        {{ form_errors(form.cycle.type) }}
+                                        <div class="col-sm-9">
+                                            {{ form_widget(form.cycle.type, {'attr': {'class': 'form-control input-sm'}}) }}
+                                        </div>
+                                    </div>
+                                    {# Champ collection#}
+                                    <div class="form-group">
+                                        {{ form_label(form.collection, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                        {{ form_errors(form.collection) }}
+                                        <div class="col-sm-9">
+                                            {{ form_widget(form.collection, {'attr': {'class': 'form-control input-sm'}}) }}
+                                        </div>
+                                    </div>
+                                    {# Champ editor#}
+                                    <div class="form-group">
+                                        {{ form_label(form.editor, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                        {{ form_errors(form.editor) }}
+                                        <div class="col-sm-9">
+                                            {{ form_widget(form.editor, {'attr': {'class': 'form-control input-sm'}}) }}
+                                        </div>
+                                    </div>
+                                    {# Champ presentation#}
+                                    <div class="form-group">
+                                        {{ form_label(form.presentation, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                        {{ form_errors(form.presentation) }}
+                                        <div class="col-sm-9">
+                                            {{ form_widget(form.presentation, {'attr': {'class': 'form-control input-sm'}}) }}
+                                        </div>
+                                    </div>
+                                    {# Champ format#}
+                                    <div class="form-group">
+                                        {{ form_label(form.format, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                        {{ form_errors(form.format) }}
+                                        <div class="col-sm-9">
+                                            {{ form_widget(form.format, {'attr': {'class': 'form-control input-sm'}}) }}
+                                        </div>
+                                    </div>
+                                    {# Champ isbn#}
+                                    <div class="form-group">
+                                        {{ form_label(form.isbn, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                        {{ form_errors(form.isbn) }}
+                                        <div class="col-sm-9">
+                                            {{ form_widget(form.isbn, {'attr': {'class': 'form-control input-sm'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {# TAB 2#}
+                                <div class="tab-pane fade" id="tab2default">
+                                    {% for linkfield in form.linkfieldsbooks %}
+                                        <div class="form-group">
+                                            {{ form_label(linkfield.field,'' ,{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                            <div class="col-sm-3">
+                                                {{ form_widget(linkfield.field, {'attr': {'class': 'form-control input-sm'}}) }}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            {{ form_widget(linkfield.type) }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+
+            </tr>
+        </table>
+        {#Footer#}
+        <div class="row">
+            <div class="col-sm-12 text-right">
+                {{ form_widget(form.save,{'attr': {'class': 'btn btn-primary'}}) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

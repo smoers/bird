@@ -1,0 +1,15 @@
+form.author.lastname: Nom :
+form.author.firstname: Prénom :
+form.author.bornLastname: Nom Civil :
+form.author.bornFirstname: Prénom Civil :
+form.author.image: Image de l'auteur
+form.author.biography: Biographie :
+form.author.comment: Commentaires :
+form.author.borndate: Date de naissance :
+form.author.deathdate: Date de décès :
+form.author.tab.1: Général
+form.author.tab.2: Champs étendus
+form.author.save: Enregistrer
+#message
+message.warning: Attention
+

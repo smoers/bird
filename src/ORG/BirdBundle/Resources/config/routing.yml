@@ -1,0 +1,49 @@
+#Dashboard
+bird_homepage:
+  path: /
+  defaults:
+    _controller: ORGBirdBundle:Main:index
+
+bird_dashboard_ajax_authors:
+  path: /ajax/grid/authors
+  defaults:
+    _controller: ORGBirdBundle:Main:gridAuthors
+
+bird_dashboard_ajax_cycles:
+  path: /ajax/grid/cycles
+  defaults:
+    _controller: ORGBirdBundle:Main:gridCycles
+
+bird_dashboard_ajax_books:
+  path: /ajax/grid/books
+  defaults:
+    _controller: ORGBirdBundle:Main:gridBooks
+
+#######
+#Author
+bird_author_add:
+  path: /author/add
+  defaults:
+    _controller: ORGBirdBundle:Author:add
+
+bird_author_edit:
+  path: /author/edit/{id}
+  defaults:
+    _controller: ORGBirdBundle:Author:edit
+  requirements:
+    id: \d+
+
+bird_author_ajax:
+  path: /author/ajax
+  defaults:
+    _controller: ORGBirdBundle:Author:ajax
+
+######
+#Book
+bird_book_add:
+  path: /book/add/{idAuthor}
+  defaults:
+    _controller: ORGBirdBundle:Book:addBook
+  requirements:
+    id: \d+
+

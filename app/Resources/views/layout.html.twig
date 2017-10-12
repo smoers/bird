@@ -1,0 +1,62 @@
+{# app/Resources/views/layout.html.twig #}
+
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- jQuery -->
+		<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> --> 
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+		
+		<!-- easyui -->
+		<script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="http://www.jeasyui.com/easyui/datagrid-detailview.js"></script>
+		<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/metro/easyui.css">
+    	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+    	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
+
+		<!-- <link rel="stylesheet" href="./lib/jquery-easyui-1.5.1/themes/icon.css">
+		<link rel="stylesheet" href="./lib/jquery-easyui-1.5.1/themes/bootstrap/easyui.css"> -->
+		
+      	<!-- Font -->
+      	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<!-- Datepicker see http://bootstrap-datepicker.readthedocs.io-->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.min.css" integrity="sha256-nFp4rgCvFsMQweFQwabbKfjrBwlaebbLkE29VFR0K40=" crossorigin="anonymous" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js" integrity="sha256-urCxMaTtyuE8UK5XeVYuQbm/MhnXflqZ/B9AOkyTguo=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.fr.min.js" integrity="sha256-IRibTuqtDv2uUUN/0iTrhnrvvygNczxRRAbPgCbs+LE=" crossorigin="anonymous"></script>
+
+
+      <title>{% block title %}Bird Web{% endblock %}</title>
+      {% block javascripts %}
+      
+      {% endblock %}
+
+      {% block stylesheets %}
+		  {% stylesheets '@ORGBirdBundle/Resources/public/css/bird.css'%}
+		  	<link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+		  {% endstylesheets %}
+
+      {% endblock %}
+    </head>
+    {% image '@ORGBirdBundle/Resources/public/images/blue-sky.jpg' %}
+    <body style="background-color: #d2f8ff" background="{{ asset_url }}">
+    {% endimage %}
+        {% block body %}
+        {% endblock %}
+    	<div class="container">
+    		<div class="col-md-4 col-md-offset-4">
+            	<hr>
+            	<footer style="text-align: center;">
+              		<p>Bird Web © {{ 'now'|date('Y') }}.</p>
+            	</footer>
+            </div>
+      	</div>
+    </body>
+</html>
