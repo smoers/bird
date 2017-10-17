@@ -1,4 +1,19 @@
 <?php
+/**
+ * Copyright (c) 2017.  Bird Web
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 namespace ORG\BirdBundle\Entity;
 
@@ -71,6 +86,13 @@ class Book
      * @ORM\Column(name="isbn", type="string", length=100, nullable=true)
      */
     private $isbn;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="image", type="boolean", nullable=true)
+     */
+    private $image;
 
     /**
      * @var \DateTime
@@ -286,6 +308,22 @@ class Book
     public function getIsbn()
     {
         return $this->isbn;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param bool $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
     }
 
     /**

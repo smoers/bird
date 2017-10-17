@@ -4,3 +4,5 @@ author.no.found.warning: Aucun auteur n'a été trouvé avec cette ID
 author.ajax.exist: Un enregistrement existe déjà avec le même nom et prénom.
 author.ajax.warning: Attention
 book.add.success: a été ajouté avec succès.
+book.no.found.warning: Aucun livre n'a été rouvé avec cette ID
+book.edit.success: a été modifé avec succès.

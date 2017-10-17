@@ -47,3 +47,11 @@ bird_book_add:
   requirements:
     id: \d+
 
+bird_book_edit:
+  path: /book/edit/{id}
+  defaults:
+    _controller: ORGBirdBundle:Book:editbook
+  requirements:
+    id: \d+
+
+

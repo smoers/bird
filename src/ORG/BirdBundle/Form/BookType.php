@@ -1,5 +1,21 @@
 <?php
 /**
+ * Copyright (c) 2017.  Bird Web
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
  * Created by PhpStorm.
  * User: a49974
  * Date: 8/08/2017
@@ -20,6 +36,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BookType extends AbstractType
@@ -109,6 +127,19 @@ class BookType extends AbstractType
                 'error_bubbling' => true,
             ));
         }
+
+        $builder->addEventListener(FormEvents::POST_SUBMIT,function (FormEvent $event) use ($isCycle){
+            /**
+             * Permet de définir les valeurs par défaut dans le cas d'un livre sans cycle
+             */
+            if(!$isCycle){
+                $book = $event->getData();
+                $book->setVolume(1);
+                $cycle = $book->getCycle();
+                $cycle->setNbrvolume(1);
+                $cycle->setTitle($event->getData()->getTitle());
+            }
+        });
 
         $builder->addEventSubscriber(new AddUploadedImage($options['uploaded_image']));
     }

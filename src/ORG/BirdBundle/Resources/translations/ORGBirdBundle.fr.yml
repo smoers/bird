@@ -23,5 +23,7 @@ main.book.format: Format
 main.book.editor: Editeur
 main.book.collection: Collection
 author.add: Ajout d'un auteur
+author.edit: Edition d'un auteur
 book.add: Ajout d'un livre pour
+book.edit: Edition d'un livre pour
 modal.messages.btn.close: Fermer

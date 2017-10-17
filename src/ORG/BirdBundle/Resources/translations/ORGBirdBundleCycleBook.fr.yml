@@ -1,6 +1,7 @@
 #Dictionnaire Français pour le domaine ORGBirdBundleCycleBook
 form.cyclebook.image: Couverture
 form.cyclebook.type: Type
+form.cyclebook.author: Auteurs
 form.cyclebook.comment: Commentaire
 form.cyclebook.nbrvolume: 'Nbr de volume'
 form.cyclebook.title: 'Titre du cycle'
