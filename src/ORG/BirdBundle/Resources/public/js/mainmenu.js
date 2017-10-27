@@ -35,23 +35,39 @@ function setupMainMenu(options){
      * Ici on gère l'affichage du modal et la réponse
      */
     $('#menu_book_add').on('click', function(){
-        $('#modalMessages_title').html('<span class="glyphicon glyphicon-question-sign"></span>');
-        $('#modalMessages_content').html(language['modal.messages.add.book']);
-        $('#modalMessages_footer').html('<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_yes">'+language['modal.messages.btn.yes']+'</button>' +
-            '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_no">'+language['modal.messages.btn.no']+'</button>');
-        $('#modalMessages').modal('show');
-        $('#modalMessage_yes').on('click',function(){
-            $('#modalMessages').modal('hide');
-            window.location.href = url[''];
-        });
-        // réponse non pas dans un cycle
-        $('#modalMessage_no').on('click',function(){
-            $('#modalMessages').modal('hide');
-            var id = $('#grid-authors').datagrid('getSelected').id;
-            href = getURL(url['menu-book-add'],id)
-            window.location.href = href;
-        });
+        //Récupérer les cycles existants pour cet auteur
+        var authorid = $('#grid-authors').datagrid('getSelected').id
+        //le 'when' permet d'attendre la réponse du server avant d'afficher la fenetre Modal
+        //Et ce du fait que la requete AJAX est asynchrone
+        $.when(
+            getCycle(url['ajax'], authorid)
+        )
+            .then(function(cycles){
+                //Mise en forme des boutons du Footer
+                var btn_new = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_new">'+language['modal.messages.btn.new']+'</button>';
+                var btn_no = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_no">'+language['modal.messages.btn.no']+'</button>';
+                var btn_existing = '<div class="form-group"><label for="modalMessage_existing">'+language['modal.messages.btn.existing']+'</label><select class="form-control" id="modalMessage_existing">';
+                cycles.forEach(function(item, index){
+                    btn_exitsing = btn_existing + '<options value="'+item.id+'">'+item.title+'</options>';
+                });
 
+                //Defini les otpions avec la liste des Cycles
+                $('#modalMessages_title').html('<span class="glyphicon glyphicon-question-sign"></span>');
+                $('#modalMessages_content').html(language['modal.messages.add.book']);
+                $('#modalMessages_footer').html( btn_new + btn_no );
+                $('#modalMessages').modal('show');
+                $('#modalMessage_yes').on('click',function(){
+                    $('#modalMessages').modal('hide');
+                    window.location.href = url[''];
+                });
+                // réponse non pas dans un cycle
+                $('#modalMessage_no').on('click',function(){
+                    $('#modalMessages').modal('hide');
+                    var id = $('#grid-authors').datagrid('getSelected').id;
+                    href = getURL(url['menu-book-add'],id)
+                    window.location.href = href;
+                });
+            });
     });
 
     $('#menu_book_edit').on('click',function () {
@@ -69,4 +85,28 @@ function getURL(URLTemplate, id) {
 
     return URLTemplate.replace(/\/0(?!.*\/0)/,'/'+id);
 
+}
+
+/**
+ * Retourne la liste des cycles suite à une requete AJAX
+ * @param url
+ * @returns {*}
+ */
+function getCycle(url, authorid){
+    var result =  $.ajax({
+        url: url,
+        method: 'POST',
+        data: { ajaxid: 'get_cycle', authorid: authorid},
+        success: function(data){
+            result = data;
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log(textStatus+' := '+errorThrown);
+        },
+        complete: function(response, status, xhr) {
+            console.log(status);
+        }
+    });
+
+    return result;
 }

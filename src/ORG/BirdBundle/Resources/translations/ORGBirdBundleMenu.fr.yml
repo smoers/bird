@@ -6,6 +6,7 @@ main.menu.edit: Modifier
 main.menu.delete: Supprimer
 main.menu.help: Aide
 modal.messages.add.book: S'agit-il d'un livre faisant partie d'un cycle ?
-modal.messages.btn.yes: Oui
+modal.messages.btn.new: Nouveau Cycle
+modal.messages.btn.existing: Cycle Existant
 modal.messages.btn.no: Non
 

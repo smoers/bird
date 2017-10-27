@@ -52,14 +52,15 @@ Date: 2/06/2017
         //Tableau avec la traduction des titres
         var language = {};
         language['modal.messages.add.book'] = '{{ 'modal.messages.add.book'|trans }}';
-        language['modal.messages.btn.yes'] = '{{ 'modal.messages.btn.yes'|trans }}';
+        language['modal.messages.btn.new'] = '{{ 'modal.messages.btn.new'|trans }}';
+        language['modal.messages.btn.existing'] = '{{ 'modal.messages.btn.existing'|trans }}';
         language['modal.messages.btn.no'] = '{{ 'modal.messages.btn.no'|trans }}';
         //Tableau avec les URL's
         var url = {};
         url['menu-author-edit'] = '{{ path('bird_author_edit',{'id': 0}) }}';
         url['menu-book-add'] = '{{ path('bird_book_add',{'idAuthor': 0}) }}';
         url['menu-book-edit'] = '{{ path('bird_book_edit',{'id': 0}) }}';
-
+        url['ajax'] = '{{ path('bird_ajax') }}';
         options['language'] = language;
         options['url'] = url;
         setupMainMenu(options);

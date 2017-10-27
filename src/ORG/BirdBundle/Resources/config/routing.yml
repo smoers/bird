@@ -4,6 +4,11 @@ bird_homepage:
   defaults:
     _controller: ORGBirdBundle:Main:index
 
+bird_ajax:
+  path: /ajax
+  defaults:
+    _controller: ORGBirdBundle:Ajax:ajax
+
 bird_dashboard_ajax_authors:
   path: /ajax/grid/authors
   defaults:
