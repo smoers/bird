@@ -46,15 +46,16 @@ function setupMainMenu(options){
                 //Mise en forme des boutons du Footer
                 var btn_new = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_new">'+language['modal.messages.btn.new']+'</button>';
                 var btn_no = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_no">'+language['modal.messages.btn.no']+'</button>';
-                var btn_existing = '<div class="form-group"><label for="modalMessage_existing">'+language['modal.messages.btn.existing']+'</label><select class="form-control" id="modalMessage_existing">';
+                var btn_yes = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_yes">'+language['modal.messages.btn.yes']+'</button>';
+                var btn_existing = '<div class="col-md-4"><select class="form-control" id="modalMessage_existing">';
                 cycles.forEach(function(item, index){
-                    btn_exitsing = btn_existing + '<options value="'+item.id+'">'+item.title+'</options>';
+                    btn_existing = btn_existing + '<option value="'+item.id+'">'+item.title+'</option>';
                 });
-
+                btn_existing = btn_existing + '</select></div>';
                 //Defini les otpions avec la liste des Cycles
                 $('#modalMessages_title').html('<span class="glyphicon glyphicon-question-sign"></span>');
                 $('#modalMessages_content').html(language['modal.messages.add.book']);
-                $('#modalMessages_footer').html( btn_new + btn_no );
+                $('#modalMessages_footer').html( '<div class="row"><div class="col-md-4">'+btn_new + btn_no + btn_yes + "</div>" + btn_existing+'</div>');
                 $('#modalMessages').modal('show');
                 $('#modalMessage_yes').on('click',function(){
                     $('#modalMessages').modal('hide');

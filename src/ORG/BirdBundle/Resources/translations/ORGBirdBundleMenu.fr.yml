@@ -9,4 +9,5 @@ modal.messages.add.book: S'agit-il d'un livre faisant partie d'un cycle ?
 modal.messages.btn.new: Nouveau Cycle
 modal.messages.btn.existing: Cycle Existant
 modal.messages.btn.no: Non
+modal.messages.btn.yes: Oui
 
