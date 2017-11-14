@@ -46,11 +46,12 @@ bird_author_ajax:
 ######
 #Book
 bird_book_add:
-  path: /book/add/{idAuthor}
+  path: /book/add/{idAuthor}/{isCycle}
   defaults:
-    _controller: ORGBirdBundle:Book:addBook
+    {_controller: ORGBirdBundle:Book:addBook, isCycle: false}
   requirements:
     id: \d+
+    isCycle: \w+
 
 bird_book_edit:
   path: /book/edit/{id}

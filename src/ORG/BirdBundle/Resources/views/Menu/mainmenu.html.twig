@@ -60,6 +60,7 @@ Date: 2/06/2017
         var url = {};
         url['menu-author-edit'] = '{{ path('bird_author_edit',{'id': 0}) }}';
         url['menu-book-add'] = '{{ path('bird_book_add',{'idAuthor': 0}) }}';
+        url['menu-cycle-book-add'] = '{{ path('bird_book_add',{'idAuthor': 0, 'isCycle': 'true'}) }}';
         url['menu-book-edit'] = '{{ path('bird_book_edit',{'id': 0}) }}';
         url['ajax'] = '{{ path('bird_ajax') }}';
         options['language'] = language;

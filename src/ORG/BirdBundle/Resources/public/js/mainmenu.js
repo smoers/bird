@@ -46,12 +46,17 @@ function setupMainMenu(options){
                 //Mise en forme des boutons du Footer
                 var btn_new = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_new">'+language['modal.messages.btn.new']+'</button>';
                 var btn_no = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_no">'+language['modal.messages.btn.no']+'</button>';
-                var btn_yes = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_yes">'+language['modal.messages.btn.yes']+'</button>';
-                var btn_existing = '<div class="col-md-4"><select class="form-control" id="modalMessage_existing">';
-                cycles.forEach(function(item, index){
-                    btn_existing = btn_existing + '<option value="'+item.id+'">'+item.title+'</option>';
-                });
-                btn_existing = btn_existing + '</select></div>';
+                var btn_yes = '';
+                var btn_existing = '';
+                //si des cyvles existent, le bouton Yes et le Select sont créés
+                if(cycles.length > 0) {
+                    btn_yes = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_yes">'+language['modal.messages.btn.yes']+'</button>';
+                    btn_existing = '<div class="col-md-4"><select class="form-control" id="modalMessage_existing">';
+                    cycles.forEach(function (item, index) {
+                        btn_existing = btn_existing + '<option value="' + item.id + '">' + item.title + '</option>';
+                    });
+                    btn_existing = btn_existing + '</select></div>';
+                }
                 //Defini les otpions avec la liste des Cycles
                 $('#modalMessages_title').html('<span class="glyphicon glyphicon-question-sign"></span>');
                 $('#modalMessages_content').html(language['modal.messages.add.book']);
@@ -67,6 +72,13 @@ function setupMainMenu(options){
                     var id = $('#grid-authors').datagrid('getSelected').id;
                     href = getURL(url['menu-book-add'],id)
                     window.location.href = href;
+                });
+                //réponse nouveau cycle
+                $('#modalMessage_new').on('click',function(){
+                    $('#modalMessages').modal('hide');
+                    var id = $('#grid-authors').datagrid('getSelected').id;
+                    href = getURL(url['menu-cycle-book-add'],id);
+                    windows.location.href = href;
                 });
             });
     });

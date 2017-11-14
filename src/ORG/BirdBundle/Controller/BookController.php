@@ -44,7 +44,7 @@ class BookController extends Controller
      *
      * @param Request $request
      */
-    public function addbookAction(Request $request, $idAuthor)
+    public function addbookAction(Request $request, $idAuthor, $isCycle)
     {
         //Init reporsitory
         $em = $this->getDoctrine()->getManager();
@@ -72,7 +72,7 @@ class BookController extends Controller
         $extendRepositoryBook = $em->getRepository('ORGBirdBundle:ExtendFieldsBook');
         //Nouvel objet Cycle
         $cycle = new Cycle();
-        $cycle->setYncycle(false);
+        $cycle->setYncycle($isCycle);
         $cycle->setNbrvolume(1);
         //Nouvel objet Book
         $book = new Book();
@@ -99,7 +99,7 @@ class BookController extends Controller
         //Objet permettant de chercher la liste des valeurs d'une liste déroulante pour les champs étendu
         $choiceTypeExtendField = new ChoiceTypeExtendField($this->getDoctrine()->getManager(), $this->getParameter('choice_books'));
         //Creation du formulaire
-        $form = $this->get('form.factory')->create(BookType::class,$book, array('uploaded_image' => $uploadedImage, 'choice_type_extend_field' => $choiceTypeExtendField));
+        $form = $this->get('form.factory')->create(BookType::class,$book, array('uploaded_image' => $uploadedImage, 'choice_type_extend_field' => $choiceTypeExtendField, 'iscycle' => $isCycle));
 
         if($request->isMethod('POST')){
             $form->handleRequest($request);
