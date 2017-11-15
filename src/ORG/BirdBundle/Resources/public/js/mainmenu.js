@@ -78,7 +78,7 @@ function setupMainMenu(options){
                     $('#modalMessages').modal('hide');
                     var id = $('#grid-authors').datagrid('getSelected').id;
                     href = getURL(url['menu-cycle-book-add'],id);
-                    windows.location.href = href;
+                    window.location.href = href;
                 });
             });
     });

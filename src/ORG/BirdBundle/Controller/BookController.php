@@ -120,7 +120,8 @@ class BookController extends Controller
             'title_comment' => $author->getLastname().' '.$author->getFirstname(),
             'form' => $form->createView(),
             'imageroot' => $uploadedImage,
-            'menudisabled' => $menuDisabledTwig
+            'menudisabled' => $menuDisabledTwig,
+            'iscycle' => $isCycle,
         ));
 
 

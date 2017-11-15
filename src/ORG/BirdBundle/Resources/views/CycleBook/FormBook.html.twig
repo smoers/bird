@@ -43,11 +43,22 @@ Date: 9/08/2017
                 </td>
                 <td>
                     <div class="form-group">
-                        {{ form_label(form.title, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
-                        {{ form_errors(form.title) }}
-                        <div class="col-sm-9">
-                            {{ form_widget(form.title, {'attr': {'class': 'form-control input-sm'}}) }}
-                        </div>
+                        {% if iscycle %}
+                            {# c'est un cycle#}
+                            {{ form_label(form.cycle.title, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                            {{ form_errors(form.cycle.title) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.cycle.title, {'attr': {'class': 'form-control input-sm'}}) }}
+                            </div>
+                        {%  else %}
+                            {# ce n'est pas un cycle#}
+                            {{ form_label(form.title, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                            {{ form_errors(form.title) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.title, {'attr': {'class': 'form-control input-sm'}}) }}
+                            </div>
+                            {# -- #}
+                        {% endif %}
                     </div>
                     <div class="form-group">
                         {{ form_label(form.cycle.authors, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
@@ -56,10 +67,39 @@ Date: 9/08/2017
                             {{ form_widget(form.cycle.authors, {'attr': {'class': 'form-control input-sm'}}) }}
                         </div>
                     </div>
+                    {# si cycle affiche ici#}
+                    {% if iscycle %}
+                        <div class="form-group">
+                            {{ form_label(form.cycle.type, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                            {{ form_errors(form.cycle.type) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.cycle.type, {'attr': {'class': 'form-control input-sm'}}) }}
+                            </div>
+                        </div>
+                        {# Champ nbrvolume#}
+                        <div class="form-group">
+                            {{ form_label(form.cycle.nbrvolume, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                            {{ form_errors(form.cycle.nbrvolume) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.cycle.nbrvolume, {'attr': {'class': 'form-control input-sm'}}) }}
+                            </div>
+                        </div>
+                        {# Champ comment#}
+                        <div class="form-group">
+                            {{ form_label(form.cycle.comment, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                            {{ form_errors(form.cycle.comment) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.cycle.comment, {'attr': {'class': 'form-control input-sm'}}) }}
+                            </div>
+                        </div>
+                    {% endif %}
                     <div style="margin-left: 20px; margin-bottom: 20px">
                         <ul class="nav nav-tabs">
                             <li class="active"  style="border: none"><a href="#tab1default" data-toggle="pill">{{ 'form.cyclebook.tab.1'|trans }}</a></li>
                             <li  style="border: none"><a href="#tab2default" data-toggle="pill">{{ 'form.cyclebook.tab.2'|trans }}</a></li>
+                            {% if iscycle %}
+                                <li  style="border: none"><a href="#tab3default" data-toggle="pill">{{ 'form.cyclebook.tab.3'|trans }}</a></li>
+                            {% endif %}
                         </ul>
                         {# Start TAB #}
                         <div style="border: #dddddd 2px solid; padding: 10px; ">
@@ -67,11 +107,19 @@ Date: 9/08/2017
                                 {#Tab 1#}
                                 <div class="tab-pane fade in active" id="tab1default">
                                     <div class="form-group">
-                                        {{ form_label(form.cycle.type, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
-                                        {{ form_errors(form.cycle.type) }}
-                                        <div class="col-sm-9">
-                                            {{ form_widget(form.cycle.type, {'attr': {'class': 'form-control input-sm'}}) }}
-                                        </div>
+                                        {% if iscycle %}
+                                            {{ form_label(form.title, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                            {{ form_errors(form.title) }}
+                                            <div class="col-sm-9">
+                                                {{ form_widget(form.title, {'attr': {'class': 'form-control input-sm'}}) }}
+                                            </div>
+                                        {% else %}
+                                            {{ form_label(form.cycle.type, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                            {{ form_errors(form.cycle.type) }}
+                                            <div class="col-sm-9">
+                                                {{ form_widget(form.cycle.type, {'attr': {'class': 'form-control input-sm'}}) }}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                     {# Champ collection#}
                                     <div class="form-group">
@@ -128,6 +176,22 @@ Date: 9/08/2017
                                         </div>
                                     {% endfor %}
                                 </div>
+                                {# TAB 3#}
+                                {% if iscycle %}
+                                    <div class="tab-pane fade" id="tab3default">
+                                        {% for linkfield in form.cycle.linkfieldscycles %}
+                                            <div class="form-group">
+                                                {{ form_label(linkfield.field,'' ,{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                                <div class="col-sm-3">
+                                                    {{ form_widget(linkfield.field, {'attr': {'class': 'form-control input-sm'}}) }}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                {{ form_widget(linkfield.type) }}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
