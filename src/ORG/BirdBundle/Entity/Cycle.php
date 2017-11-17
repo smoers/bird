@@ -110,6 +110,7 @@ class Cycle
     public function __construct(){
     	$this->authors = new ArrayCollection();
     	$this->books = new ArrayCollection();
+    	$this->linkFieldsCycles = new ArrayCollection();
     	$this->createdate =  new \DateTime();
     }
 

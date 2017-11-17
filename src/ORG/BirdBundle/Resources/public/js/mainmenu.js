@@ -62,10 +62,6 @@ function setupMainMenu(options){
                 $('#modalMessages_content').html(language['modal.messages.add.book']);
                 $('#modalMessages_footer').html( '<div class="row"><div class="col-md-4">'+btn_new + btn_no + btn_yes + "</div>" + btn_existing+'</div>');
                 $('#modalMessages').modal('show');
-                $('#modalMessage_yes').on('click',function(){
-                    $('#modalMessages').modal('hide');
-                    window.location.href = url[''];
-                });
                 // réponse non pas dans un cycle
                 $('#modalMessage_no').on('click',function(){
                     $('#modalMessages').modal('hide');
@@ -77,7 +73,14 @@ function setupMainMenu(options){
                 $('#modalMessage_new').on('click',function(){
                     $('#modalMessages').modal('hide');
                     var id = $('#grid-authors').datagrid('getSelected').id;
-                    href = getURL(url['menu-cycle-book-add'],id);
+                    href = getURL(url['menu-cycle-new-book-add'],id);
+                    window.location.href = href;
+                });
+                //Réponse cycle existant
+                $('#modalMessage_yes').on('click', function () {
+                    $('#modalMessages').modal('hide');
+                    var id = $('#modalMessage_existing').val();
+                    href = getURL(url['menu-cycle-edit-book-add'], id);
                     window.location.href = href;
                 });
             });

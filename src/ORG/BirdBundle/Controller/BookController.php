@@ -44,8 +44,11 @@ class BookController extends Controller
      *
      * @param Request $request
      */
-    public function addbookAction(Request $request, $idAuthor, $isCycle)
+    public function addbookAction(Request $request, $idAuthor, $isCycle, $isNew)
     {
+        //Converti les string true et false en variable boolean
+        $isCycle = filter_var($isCycle, FILTER_VALIDATE_BOOLEAN);
+        $isNew = filter_var($isNew, FILTER_VALIDATE_BOOLEAN);
         //Init reporsitory
         $em = $this->getDoctrine()->getManager();
         $trans = $this->get('translator');
@@ -62,44 +65,71 @@ class BookController extends Controller
             'menu_book_edit',
             'menu_book_delete'
         ));
-        $author = $em->getRepository('ORGBirdBundle:Author')->find($idAuthor);
-        //Test l'existance de l'auteur
-        if(!$author){
-            $request->getSession()->getFlashBag()->add('warning',$idAuthor.' '.$trans->trans('author.no.found.warning'));
-            return $this->redirectToRoute('bird_homepage');
+        $author = null;
+        $cycle = null;
+        if($isCycle && !$isNew) {
+            /**
+             * Cas où on crée un nouveau livre pour un cycle existant
+             */
+            $cycle = $em->getRepository('ORGBirdBundle:Cycle')->find($idAuthor);
+            if (!$cycle) {
+                $request->getSession()->getFlashBag()->add('warning', $idAuthor . ' ' . $trans->trans('cycle.no.found.warning'));
+                return $this->redirectToRoute('bird_homepage');
+            }
         }
-        $extendRepositoryCycle = $em->getRepository('ORGBirdBundle:ExtendFieldsCycle');
-        $extendRepositoryBook = $em->getRepository('ORGBirdBundle:ExtendFieldsBook');
-        //Nouvel objet Cycle
-        $cycle = new Cycle();
-        $cycle->setYncycle($isCycle);
-        $cycle->setNbrvolume(1);
-        //Nouvel objet Book
+        else{
+            /**
+             * Cas où l'on crée un nouvea livre pour un nouveau cycle ou sans nouveau cycle
+             */
+            $author = $em->getRepository('ORGBirdBundle:Author')->find($idAuthor);
+            //Test l'existance de l'auteur
+            if (!$author) {
+                $request->getSession()->getFlashBag()->add('warning', $idAuthor . ' ' . $trans->trans('author.no.found.warning'));
+                return $this->redirectToRoute('bird_homepage');
+            }
+            $extendRepositoryCycle = $em->getRepository('ORGBirdBundle:ExtendFieldsCycle');
+            //Nouvel objet Cycle
+            $cycle = new Cycle();
+            $cycle->setYncycle($isCycle);
+            $cycle->setNbrvolume(1);
+            //Obtenir les extend fields, créer les Link objet et les Extend value objet
+            foreach ($extendRepositoryCycle->findAll() as $extendField){
+                $linkField = new LinkFieldsCycle();
+                $linkField->setExtendFieldsCycle($extendField);
+                $linkField->setExtendValuesCycle(new ExtendValuesCycle());
+                $cycle->addLinkfieldscycle($linkField);
+            }
+            //Ajoute le cycle à l'auteur et l'auteur s'ajoute automatiquement au cycle
+            $author->addCycle($cycle);
+        }
+        /**
+         * définition du nouvelle object book
+         */
         $book = new Book();
-        //Obtenir les extend fields, créer les Link objet et les Extend value objet
-        foreach ($extendRepositoryCycle->findAll() as $extendField){
-            $linkField = new LinkFieldsCycle();
-            $linkField->setExtendFieldsCycle($extendField);
-            $linkField->setExtendValuesCycle(new ExtendValuesCycle());
-            $cycle->addLinkfieldscycle($linkField);
-        }
+        $extendRepositoryBook = $em->getRepository('ORGBirdBundle:ExtendFieldsBook');
         foreach ($extendRepositoryBook->findAll() as $extendField){
             $linkField = new LinkFieldsBook();
             $linkField->setExtendFieldsBook($extendField);
             $linkField->setExtendValuesBook(new ExtendValuesBook());
             $book->addLinkfieldsbook($linkField);
         }
-
-        //Ajoute le cycle à l'auteur et l'auteur s'ajoute automatiquement au cycle
-        $author->addCycle($cycle);
         //ajoute le livre au cycle et le cycle s'ajoute automatiquement au Book
         $cycle->addBook($book);
         //Objet de chargement des images
         $uploadedImage = new UploadedImage($this->getParameter('images_books_folder'));
         //Objet permettant de chercher la liste des valeurs d'une liste déroulante pour les champs étendu
         $choiceTypeExtendField = new ChoiceTypeExtendField($this->getDoctrine()->getManager(), $this->getParameter('choice_books'));
+        $choiceTypeExtendFieldCycle = null;
+        //définition de l'objet permettant la contruction des liste déroulantes de champs étendus si il y a un cycle
+        if($isCycle){
+            $choiceTypeExtendFieldCycle = new ChoiceTypeExtendField($this->getDoctrine()->getManager(), $this->getParameter('choice_cycles'));
+        }
         //Creation du formulaire
-        $form = $this->get('form.factory')->create(BookType::class,$book, array('uploaded_image' => $uploadedImage, 'choice_type_extend_field' => $choiceTypeExtendField, 'iscycle' => $isCycle));
+        $form = $this->get('form.factory')->create(BookType::class,$book, array(
+            'uploaded_image' => $uploadedImage,
+            'choice_type_extend_field' => $choiceTypeExtendField,
+            'choice_type_extend_field_cycle' => $choiceTypeExtendFieldCycle,
+            'iscycle' => $isCycle));
 
         if($request->isMethod('POST')){
             $form->handleRequest($request);

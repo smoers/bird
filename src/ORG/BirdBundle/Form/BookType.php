@@ -109,6 +109,7 @@ class BookType extends AbstractType
             ))
             ->add('cycle', CycleType::class,array(
                 'iscycle' => $options['iscycle'],
+                'choice_type_extend_field' => $options['choice_type_extend_field_cycle'],
                 'disabled' => $disabled,
             ))
             ->add('save', SubmitType::class, array(
@@ -150,6 +151,7 @@ class BookType extends AbstractType
             'data_class' => 'ORG\BirdBundle\Entity\Book',
             'uploaded_image' => null,
             'choice_type_extend_field' => null,
+            'choice_type_extend_field_cycle' => null,
             'iscycle' => false,
         ));
     }

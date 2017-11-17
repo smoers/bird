@@ -6,13 +6,15 @@ form.cyclebook.comment: Commentaire
 form.cyclebook.nbrvolume: 'Nbr de volume'
 form.cyclebook.title: 'Titre du cycle'
 form.cyclebook.title.volume: 'Titre du tome'
+form.cyclebook.volume: 'Volume n°'
 form.cyclebook.collection: Collection
 form.cyclebook.editor: Editeur
 form.cyclebook.isbn: ISBN
 form.cyclebook.presentation: Présentation
 form.cyclebook.format: Format
 form.cyclebook.tab.1: Général
-form.cyclebook.tab.2: Champs étendus
+form.cyclebook.tab.2: Champs étendus Livre
+form.cyclebook.tab.3: Champs étendus Cycle
 form.cyclebook.save: Enregistrer
 
 
