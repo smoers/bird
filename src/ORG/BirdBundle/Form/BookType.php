@@ -101,12 +101,6 @@ class BookType extends AbstractType
                 'translation_domain' => 'ORGBirdBundleCycleBook',
                 'error_bubbling' => true,
             ))
-            ->add('linkfieldsbooks',CollectionType::class,array(
-                'entry_type' => ExtendFieldsType::class,
-                'entry_options' => array(
-                    'choice_type_extend_field' => $options['choice_type_extend_field']
-                ),
-            ))
             ->add('cycle', CycleType::class,array(
                 'iscycle' => $options['iscycle'],
                 'choice_type_extend_field' => $options['choice_type_extend_field_cycle'],
@@ -122,12 +116,28 @@ class BookType extends AbstractType
                 'disabled' => $disabled,
                 'scale' => 0,
                 'grouping' => true,
-                'required' => false,
+                'required' => true,
                 'label' => 'form.cyclebook.volume',
                 'translation_domain' => 'ORGBirdBundleCycleBook',
                 'error_bubbling' => true,
             ));
         }
+
+        /**
+         * On affiche les champs etendus uniquement ils existent
+         * Attention le fichier TWIG doit être adapté
+         */
+        $builder->addEventListener(Formevents::PRE_SET_DATA, function (FormEvent $event) use($options){
+            $form = $event->getForm();
+            if($event->getData()->getLinkfieldsbooks()->count() > 0){
+                $form->add('linkfieldsbooks',CollectionType::class,array(
+                    'entry_type' => ExtendFieldsType::class,
+                    'entry_options' => array(
+                        'choice_type_extend_field' => $options['choice_type_extend_field']
+                    ),
+                ));
+            }
+        });
 
         $builder->addEventListener(FormEvents::POST_SUBMIT,function (FormEvent $event) use ($isCycle){
             /**

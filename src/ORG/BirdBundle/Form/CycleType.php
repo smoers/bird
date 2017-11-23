@@ -36,6 +36,8 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CycleType extends AbstractType
@@ -107,13 +109,23 @@ class CycleType extends AbstractType
                 'label' => 'form.cyclebook.title',
                 'translation_domain' => 'ORGBirdBundleCycleBook',
                 'error_bubbling' => true,
-            ))
-            ->add('linkfieldscycles',CollectionType::class,array(
-                'entry_type' => ExtendFieldsType::class,
-                'entry_options' => array(
-                    'choice_type_extend_field' => $options['choice_type_extend_field']
-                ),
             ));
+
+            /**
+             * On affiche les champs etendus uniquement ils existent
+             * Attention le fichier TWIG doit être adapté
+             */
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+                $form = $event->getForm();
+                if($event->getData()->getLinkfieldscycles()->count() > 0){
+                    $form->add('linkfieldscycles',CollectionType::class,array(
+                        'entry_type' => ExtendFieldsType::class,
+                        'entry_options' => array(
+                            'choice_type_extend_field' => $options['choice_type_extend_field']
+                        ),
+                    ));
+                }
+            });
         }
 
     }

@@ -56,7 +56,12 @@ class AjaxController extends Controller
                     $orderBy->push('title',OrderBy::ORDER_ASC);
                     return new JsonResponse($filterB->getQueryBuilder($em->getRepository('ORGBirdBundle:Cycle')->getQueryBuilderFiltered($filterA, $orderBy))->getQuery()->getArrayResult());
                     break;
+
+                case 'get_layout_a':
+                    $authorId = $request->get('authorid');
+                    
             }
         }
     }
+
 }

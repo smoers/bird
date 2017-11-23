@@ -172,22 +172,8 @@ Date: 9/08/2017
                                 </div>
                                 {# TAB 2#}
                                 <div class="tab-pane fade" id="tab2default">
-                                    {% for linkfield in form.linkfieldsbooks %}
-                                        <div class="form-group">
-                                            {{ form_label(linkfield.field,'' ,{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
-                                            <div class="col-sm-3">
-                                                {{ form_widget(linkfield.field, {'attr': {'class': 'form-control input-sm'}}) }}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            {{ form_widget(linkfield.type) }}
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                                {# TAB 3#}
-                                {% if iscycle %}
-                                    <div class="tab-pane fade" id="tab3default">
-                                        {% for linkfield in form.cycle.linkfieldscycles %}
+                                    {% if form.linkfieldsbooks is defined %}
+                                        {% for linkfield in form.linkfieldsbooks %}
                                             <div class="form-group">
                                                 {{ form_label(linkfield.field,'' ,{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
                                                 <div class="col-sm-3">
@@ -198,6 +184,24 @@ Date: 9/08/2017
                                                 {{ form_widget(linkfield.type) }}
                                             </div>
                                         {% endfor %}
+                                    {% endif %}
+                                </div>
+                                {# TAB 3#}
+                                {% if iscycle %}
+                                    <div class="tab-pane fade" id="tab3default">
+                                        {% if form.cycle.linkfieldscycles is defined %}
+                                            {% for linkfield in form.cycle.linkfieldscycles %}
+                                                <div class="form-group">
+                                                    {{ form_label(linkfield.field,'' ,{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                                    <div class="col-sm-3">
+                                                        {{ form_widget(linkfield.field, {'attr': {'class': 'form-control input-sm'}}) }}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    {{ form_widget(linkfield.type) }}
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
                                 {% endif %}
                             </div>

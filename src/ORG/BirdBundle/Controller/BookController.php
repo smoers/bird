@@ -76,6 +76,7 @@ class BookController extends Controller
                 $request->getSession()->getFlashBag()->add('warning', $idAuthor . ' ' . $trans->trans('cycle.no.found.warning'));
                 return $this->redirectToRoute('bird_homepage');
             }
+            $cycle->setNbrvolume($cycle->getNbrvolume()+1);
         }
         else{
             /**
@@ -134,7 +135,7 @@ class BookController extends Controller
         if($request->isMethod('POST')){
             $form->handleRequest($request);
             if ($form->isValid()){
-                $cycle->setTitle($cycle->getBooks()->first()->getTitle());
+                //$cycle->setTitle($cycle->getBooks()->first()->getTitle());
                 //Sauvegarde le cycle et le livre
                 $em->persist($cycle);
                 $em->flush();
@@ -144,16 +145,21 @@ class BookController extends Controller
                 return $this->redirectToRoute('bird_homepage');
             }
         }
+        //Constitue la liste des auteurs pour le titre
+        $comment = null;
+        foreach ($cycle->getAuthors() as $key => $item){
+            if($key != 0){ $comment .= ', '; }
+            $comment .= $item->getLastname().' '.$item->getFirstname();
+        }
 
         return $this->render('ORGBirdBundle:CycleBook:FormBook.html.twig', array(
             'title' => 'book.add',
-            'title_comment' => $author->getLastname().' '.$author->getFirstname(),
+            'title_comment' => $comment,
             'form' => $form->createView(),
             'imageroot' => $uploadedImage,
             'menudisabled' => $menuDisabledTwig,
             'iscycle' => $isCycle,
         ));
-
 
     }
 
@@ -188,13 +194,24 @@ class BookController extends Controller
             $request->getSession()->getFlashBag()->add('warning',$id.' '.$trans->trans('book.no.found.warning'));
             return $this->redirectToRoute('bird_homepage');
         }
+        //Détermine si le livre fait partie d'un cycle
+        $isCycle = $book->getCycle()->getYncycle();
         //Objet de chargement des images
         $uploadedImage = new UploadedImage($this->getParameter('images_books_folder'));
         $uploadedImage->setImageName($book->getId());
         //Objet permettant de chercher la liste des valeurs d'une liste déroulante pour les champs étendu
         $choiceTypeExtendField = new ChoiceTypeExtendField($this->getDoctrine()->getManager(), $this->getParameter('choice_books'));
+        //définition de l'objet permettant la contruction des listes déroulantes de champs étendus si il y a un cycle
+        if($isCycle){
+            $choiceTypeExtendFieldCycle = new ChoiceTypeExtendField($this->getDoctrine()->getManager(), $this->getParameter('choice_cycles'));
+        }
         //Creation du formulaire
-        $form = $this->get('form.factory')->create(BookType::class,$book, array('uploaded_image' => $uploadedImage, 'choice_type_extend_field' => $choiceTypeExtendField));
+        $form = $this->get('form.factory')->create(BookType::class,$book, array(
+            'uploaded_image' => $uploadedImage,
+            'choice_type_extend_field' => $choiceTypeExtendField,
+            'choice_type_extend_field_cycle' => $choiceTypeExtendFieldCycle,
+            'iscycle' => $isCycle
+        ));
         if($request->isMethod('POST')){
             $form->handleRequest($request);
             if ($form->isValid()){
@@ -207,12 +224,19 @@ class BookController extends Controller
                 return $this->redirectToRoute('bird_homepage');
             }
         }
-
+        //Constitue la liste des auteurs pour le titre
+        $comment = null;
+        foreach ($book->getCycle()->getAuthors() as $key => $item){
+            if($key != 0){ $comment .= ', '; }
+            $comment .= $item->getLastname().' '.$item->getFirstname();
+        }
         return $this->render('ORGBirdBundle:CycleBook:FormBook.html.twig', array(
             'title' => 'book.edit',
+            'title_comment' => $comment,
             'form' => $form->createView(),
             'imageroot' => $uploadedImage,
-            'menudisabled' => $menuDisabledTwig
+            'menudisabled' => $menuDisabledTwig,
+            'iscycle' => $isCycle,
         ));
     }
 
