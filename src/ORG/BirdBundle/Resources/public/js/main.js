@@ -43,6 +43,7 @@ function setup(options){
 
 	var language = options['language'];
 	var url = options['url'];
+	var layout_cirrus = document.getElementById('treegrid-cycles');
 
     //Init la liste alphabétique du panneau West
     alphabet_linkbutton.forEach(function (value, index) {
@@ -181,6 +182,9 @@ function setup(options){
         onSelect:function(index, row){
             if(row){
                 $('#grid-cycles').datagrid('load',{id_author: row.id});
+                if(layout_cirrus){
+                    $('#treegrid-cycles').treegrid('load',{ajaxid: 'get_layout_cirrus', authorid: row.id});
+                }
             };
         },
         onLoadSuccess:function(data) {
@@ -213,5 +217,20 @@ function setup(options){
 
         },
     })
+
+    if(layout_cirrus){
+        $('#treegrid-cycles').treegrid({
+            url: url['ajax'],
+            idField: 'id',
+            treeField: 'Title',
+            columns:[[
+                {field:'Title',title:'Title'},
+                {field:'Volume',title:'Volume'},
+                {field:'Format',title:'Format'}
+            ]]
+        });
+
+
+    }
 
 }

@@ -12,10 +12,72 @@ namespace ORG\BirdBundle\Model\TreeGrid;
 class NodeCycleBook
 {
 
-    private $id;
-    private $titre;
-    private $tome;
-    private $format;
+    private $fields;
+
+    /**
+     * NodeCycleBook constructor.
+     */
+    public function __construct()
+    {
+        $this->fields = array();
+        $this->fields['id'] = 0;
+        $this->fields['children'] = null;
+        $this->fields['state'] = 'close';
+    }
+
+    /**
+     * @param $id
+     */
+    public function setId($id)
+    {
+        $this->fields['id'] = $id;
+    }
+
+    /**
+     * @param NodeCycleBook $child
+     */
+    public function setChildren(NodeCycleBook $child){
+        //Premier ajout on defini l'array
+        if(!is_array($this->fields['children'])){
+            $this->fields['children'] = array();
+        }
+        array_push($this->fields['children'],$child);
+    }
+
+    /**
+     * @param $state
+     */
+    public function setState($state)
+    {
+        $this->fields['state'] = $state;
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     */
+    public function push($key, $value)
+    {
+        $this->fields[$key] = $value;
+    }
+
+    /**
+     * @return array
+     */
+    public function getForJson()
+    {
+        if($this->fields['children'] === null){
+            $this->fields = array_diff_key($this->fields,['children']);
+        }
+        else{
+            $children = array();
+            foreach ($this->fields['children'] as $child){
+                array_push($children,$child->getForJson());
+            }
+        }
+
+        return $this->fields;
+    }
 
 
 }

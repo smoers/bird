@@ -26,6 +26,8 @@ namespace ORG\BirdBundle\Controller;
 
 use ORG\BirdBundle\Model\Filter\Filter;
 use ORG\BirdBundle\Model\OrderBy\OrderBy;
+use ORG\BirdBundle\Model\TreeGrid\NodeCycleBook;
+use ORG\BirdBundle\Model\TreeGrid\NodeCycleBookBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,11 +59,28 @@ class AjaxController extends Controller
                     return new JsonResponse($filterB->getQueryBuilder($em->getRepository('ORGBirdBundle:Cycle')->getQueryBuilderFiltered($filterA, $orderBy))->getQuery()->getArrayResult());
                     break;
 
-                case 'get_layout_a':
+                case 'get_layout_cirrus':
                     $authorId = $request->get('authorid');
-                    
+                    $forJson = array();
+                    $filter = new Filter();
+                    $filter->setStrict(true);
+                    $filter->setFields(array('id'));
+                    $filter->setValue($authorId);
+                    $filter->setAlias(Filter::ALIAS_NO_ROOT);
+                    $filter->setComparator(Filter::COMPARATOR_EQ);
+                    $orderBy = new OrderBy();
+                    $orderBy->setAlias(OrderBy::ALIAS_ONLY_ROOT);
+                    $orderBy->push('title',OrderBy::ORDER_ASC);
+                    $result = $em->getRepository('ORGBirdBundle:Cycle')->getQueryBuilderFiltered($filter, $orderBy)->getQuery()->getResult();
+                    var_dump(count($result));
+                    $nodes = new NodeCycleBookBuilder($result);
+                    $nodes->build();
+                    return new JsonResponse($nodes->getForJson());
+
             }
         }
+
+        return new JsonResponse(array());
     }
 
 }

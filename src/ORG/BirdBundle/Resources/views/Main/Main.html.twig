@@ -34,22 +34,36 @@
 					   split: true,
 					   hideCollapsedContent: false,">
 			<div class="easyui-layout" id="cycle-layout" style="width: 100%; height: 100%">
-				<!-- panel cycles -->
-				<div data-options="region: 'center',
-							   title: '{{ 'main.cycle.title.layout'|trans }}',
-							   split: true,
-							   hideCollapsedContent: false,">
-					<!-- grid cycles -->
-					<div class="easyui-datagrid" id="grid-cycles" style="padding: 0px"></div>
-				</div>
-				<!-- panel livres -->
-				<div data-options="region: 'south',
-							   title: '{{ 'main.book.title.layout'|trans }}',
-								split: true,
-								hideCollapsedContent: false,">
-					<!-- grid livres -->
-					<div class="easyui-datagrid" id="grid-books" style="padding: 0px"></div>
-				</div>
+				{% if layout is not defined %}
+					{% set layout = 'cirrus' %}
+				{% endif %}
+				{% if layout == 'startocumulus' %}
+					<!-- panel cycles -->
+					<div data-options="region: 'center',
+								   title: '{{ 'main.cycle.title.layout'|trans }}',
+								   split: true,
+								   hideCollapsedContent: false,">
+						<!-- grid cycles -->
+						<div class="easyui-datagrid" id="grid-cycles" style="padding: 0px"></div>
+					</div>
+					<!-- panel livres -->
+					<div data-options="region: 'south',
+								   title: '{{ 'main.book.title.layout'|trans }}',
+									split: true,
+									hideCollapsedContent: false,">
+						<!-- grid livres -->
+						<div class="easyui-datagrid" id="grid-books" style="padding: 0px"></div>
+					</div>
+				{% elseif layout == 'cirrus' %}
+					<!-- panel cycles -->
+					<div data-options="region: 'center',
+								   title: '{{ 'main.cycle.title.layout'|trans }}',
+								   split: true,
+								   hideCollapsedContent: false,">
+						<!-- grid cycles -->
+						<table class="easyui-treegrid" id="treegrid-cycles" style="padding: 0px"></table>
+					</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>
@@ -83,6 +97,7 @@
 		url['grid-authors'] = '{{ path('bird_dashboard_ajax_authors') }}';
 		url['grid-cycles'] = '{{ path('bird_dashboard_ajax_cycles') }}';
 		url['grid-books'] = '{{ path('bird_dashboard_ajax_books') }}';
+		url['ajax'] = '{{ path('bird_ajax') }}';
 
 		options['language'] = language;
 		options['url'] = url;
