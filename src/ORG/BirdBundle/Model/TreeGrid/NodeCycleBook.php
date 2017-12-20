@@ -22,7 +22,7 @@ class NodeCycleBook
         $this->fields = array();
         $this->fields['id'] = 0;
         $this->fields['children'] = null;
-        $this->fields['state'] = 'close';
+        $this->fields['state'] = 'closed';
     }
 
     /**
@@ -67,13 +67,15 @@ class NodeCycleBook
     public function getForJson()
     {
         if($this->fields['children'] === null){
-            $this->fields = array_diff_key($this->fields,['children']);
+            unset($this->fields['children']);
+            unset($this->fields['state']);
         }
         else{
             $children = array();
             foreach ($this->fields['children'] as $child){
                 array_push($children,$child->getForJson());
             }
+            $this->fields['children'] = $children;
         }
 
         return $this->fields;

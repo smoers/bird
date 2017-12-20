@@ -9,6 +9,9 @@
 namespace ORG\BirdBundle\Model\TreeGrid;
 
 
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
+
 class NodeCycleBookBuilder
 {
 
@@ -21,6 +24,9 @@ class NodeCycleBookBuilder
         $this->nodes = array();
     }
 
+    /**
+     *
+     */
     public function build()
     {
         foreach ($this->cycles as $cycle){
@@ -66,6 +72,10 @@ class NodeCycleBookBuilder
         foreach ($this->nodes as $node){
             array_push($return, $node->getForJson());
         }
+        /*
+        $dumper = new HtmlDumper();
+        $cloner = new VarCloner();
+        $dumper->dump($cloner->cloneVar($return));*/
         return $return;
     }
 }

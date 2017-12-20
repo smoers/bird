@@ -224,7 +224,7 @@ function setup(options){
             idField: 'id',
             treeField: 'Title',
             columns:[[
-                {field:'Title',title:'Title'},
+                {field:'Title',title:'Title', formatter:function(value){return value}},
                 {field:'Volume',title:'Volume'},
                 {field:'Format',title:'Format'}
             ]]

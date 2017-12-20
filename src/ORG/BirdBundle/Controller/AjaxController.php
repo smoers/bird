@@ -72,7 +72,7 @@ class AjaxController extends Controller
                     $orderBy->setAlias(OrderBy::ALIAS_ONLY_ROOT);
                     $orderBy->push('title',OrderBy::ORDER_ASC);
                     $result = $em->getRepository('ORGBirdBundle:Cycle')->getQueryBuilderFiltered($filter, $orderBy)->getQuery()->getResult();
-                    var_dump(count($result));
+                    //var_dump(count($result));
                     $nodes = new NodeCycleBookBuilder($result);
                     $nodes->build();
                     return new JsonResponse($nodes->getForJson());
