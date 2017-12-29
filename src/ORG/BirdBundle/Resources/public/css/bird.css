@@ -114,3 +114,11 @@
     color: #fff;
     background-color: #555;
 }
+
+.icon-cycle{
+    background: url('icons/cycle-16.png') no-repeat center;
+}
+
+.icon-book{
+    background: url('icons/book-16.png') no-repeat center;
+}

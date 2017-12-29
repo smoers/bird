@@ -23,6 +23,7 @@ class NodeCycleBook
         $this->fields['id'] = 0;
         $this->fields['children'] = null;
         $this->fields['state'] = 'closed';
+        $this->fields['iconCls'] = 'icon-book';
     }
 
     /**

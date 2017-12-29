@@ -38,6 +38,7 @@ class NodeCycleBookBuilder
                 $nodeC->setId($cycle->getId());
                 $nodeC->push(('Title'), $cycle->getTitle());
                 $nodeC->push('Volume', $cycle->getNbrvolume());
+                $nodeC->push('iconCls','icon-cycle');
                 foreach ($cycle->getBooks() as $book){
                     $nodeB = new NodeCycleBook();
                     $nodeB->setId($book->getId());

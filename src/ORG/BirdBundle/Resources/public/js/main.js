@@ -224,9 +224,12 @@ function setup(options){
             idField: 'id',
             treeField: 'Title',
             columns:[[
-                {field:'Title',title:'Title', formatter:function(value){return value}},
-                {field:'Volume',title:'Volume'},
-                {field:'Format',title:'Format'}
+                {field:'Title',title:language['main.book.title']},
+                {field:'Volume',title:language['main.cycle.nbrvolume']+'/'+language['main.book.volume']},
+                {field:'Format',title:language['main.book.format']},
+                {field:'Editor',title:language['main.book.editor']},
+                {field:'Collection',title:language['main.book.collection']}
+
             ]]
         });
 
