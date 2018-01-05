@@ -1,6 +1,9 @@
 {% extends "ORGBirdBundle::layout.html.twig" %}
 {% trans_default_domain "ORGBirdBundle" %}
-
+{#La variable selected est utilisée pour sélectionner un auteur lors du chargement de la page#}
+{% if selected is not defined %}
+	{% set selected = 0 %}
+{% endif %}
 {% block menu %}
 	{% include 'ORGBirdBundle:Menu:mainmenu.html.twig' %}
 {% endblock %}
@@ -35,7 +38,7 @@
 					   hideCollapsedContent: false,">
 			<div class="easyui-layout" id="cycle-layout" style="width: 100%; height: 100%">
 				{% if layout is not defined %}
-					{% set layout = 'cirrus' %}
+					{% set layout = 'startocumulus' %}
 				{% endif %}
 				{% if layout == 'startocumulus' %}
 					<!-- panel cycles -->
@@ -100,6 +103,7 @@
 
 		options['language'] = language;
 		options['url'] = url;
+		options['selectedAuthor'] = {{ selected }};
 		setup(options);
 	});
 

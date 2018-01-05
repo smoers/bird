@@ -43,6 +43,7 @@ function setup(options){
 
 	var language = options['language'];
 	var url = options['url'];
+	var selectedAuthor = options['selectedAuthor'];
 	var layout_cirrus = document.getElementById('treegrid-cycles');
 
     //Init la liste alphabétique du panneau West
@@ -190,7 +191,8 @@ function setup(options){
         onLoadSuccess:function(data) {
             //cette event permet de selectionner le premiere auteur, s'il existe
             if(data.total != 0){
-                $('#grid-authors').datagrid('selectRow',0);
+                $('#grid-authors').datagrid('selectRow',selectedAuthor);
+
             }
             else{
                 //Vide le datagrid des cycle dans le cas ou il n'y a pas d'auteurs pour le filtre
@@ -218,6 +220,16 @@ function setup(options){
         },
     })
 
+    $('#grid-books').datagrid({
+        onLoadSuccess:function(data){
+            //cette event permet de selectionner le premiere cycle, s'il existe
+            if(data.total != 0){
+                $('#grid-books').datagrid('selectRow',0);
+            }
+        }
+    });
+
+
     if(layout_cirrus){
         $('#treegrid-cycles').treegrid({
             url: url['ajax'],
@@ -228,8 +240,8 @@ function setup(options){
                 {field:'Volume',title:language['main.cycle.nbrvolume']+'/'+language['main.book.volume']},
                 {field:'Format',title:language['main.book.format']},
                 {field:'Editor',title:language['main.book.editor']},
-                {field:'Collection',title:language['main.book.collection']}
-
+                {field:'Collection',title:language['main.book.collection']},
+                {field:'Cycle',title:'cycle'}
             ]]
         });
 

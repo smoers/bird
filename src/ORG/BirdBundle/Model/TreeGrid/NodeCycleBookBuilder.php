@@ -39,6 +39,7 @@ class NodeCycleBookBuilder
                 $nodeC->push(('Title'), $cycle->getTitle());
                 $nodeC->push('Volume', $cycle->getNbrvolume());
                 $nodeC->push('iconCls','icon-cycle');
+                $nodeC->push('Cycle',$cycle->getYncycle());
                 foreach ($cycle->getBooks() as $book){
                     $nodeB = new NodeCycleBook();
                     $nodeB->setId($book->getId());
@@ -47,6 +48,7 @@ class NodeCycleBookBuilder
                     $nodeB->push('Format',$book->getFormat()->getValue());
                     $nodeB->push('Editor', $book->getEditor());
                     $nodeB->push('Collection', $book->getCollection());
+                    $nodeB->push('Cycle',false);
                     $nodeC->setChildren($nodeB);
                 }
             }
@@ -61,7 +63,7 @@ class NodeCycleBookBuilder
                 $nodeC->push('Format',$book->getFormat()->getValue());
                 $nodeC->push('Editor', $book->getEditor());
                 $nodeC->push('Collection', $book->getCollection());
-
+                $nodeC->push('Cycle',$cycle->getYncycle());
             }
             array_push($this->nodes,$nodeC);
         }

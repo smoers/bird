@@ -56,34 +56,51 @@ class MainController extends Controller
 	    //Obtenir l'instance du logger
         $logger = $this->get('monolog.logger.bird');
         if($request->isXmlHttpRequest()) {
+            $authorCriteriaFilter = array();
+            //Si des critères ont été sauvés dans la session, ils sont chargés et seront utilisés.
+            if($request->getSession()->has('author_criteria_filter') && $request->getSession()->get('author_criteria_filter')['enabled']){
+                $authorCriteriaFilter = $request->getSession()->get('author_criteria_filter');
+                $authorCriteriaFilter['enabled'] = false;
+                //var_dump($authorCriteriaFilter);exit;
+            }
+            else{
+                $authorCriteriaFilter['type'] = $request->get('type');
+                $authorCriteriaFilter['letter'] = $request->get('letter');
+                $authorCriteriaFilter['sort'] = $request->get('sort');
+                $authorCriteriaFilter['order'] = $request->get('order');
+                $authorCriteriaFilter['enabled'] = false;
+            }
+            //Sauvegarde les parametres de session
+            $request->getSession()->set('author_criteria_filter',$authorCriteriaFilter);
             //Tri alphabetique sans demande de tri
-            if ($request->get('type') === 'alph'
-                && null !== $request->get('letter')
-                && null == $request->get('sort')
-                && null == $request->get('ordert'))
+            if ($authorCriteriaFilter['type'] === 'alph'
+                && null !== $authorCriteriaFilter['letter']
+                && null == $authorCriteriaFilter['sort']
+                && null == $authorCriteriaFilter['order'])
             {
-                $logger->info($request->get('type'), array($request->get('letter')));
-                    return new JsonResponse($this->getData($request,true));
+                $logger->info($authorCriteriaFilter['type'], array($authorCriteriaFilter['letter']));
+                    return new JsonResponse($this->getData($authorCriteriaFilter,true));
             }
             //Nous sommes dans le cas d'une demande de tri des colonnes sans filtre
-            elseif (null === $request->get('type')
-                    && null === $request->get('letter')
-                    && null !== $request->get('sort')
-                    && null !== $request->get('order'))
+            elseif (null === $authorCriteriaFilter['type']
+                    && null === $authorCriteriaFilter['letter']
+                    && null !== $authorCriteriaFilter['sort']
+                    && null !== $authorCriteriaFilter['order'])
             {
-                    return new JsonResponse($this->getData($request,false,true));
+                    return new JsonResponse($this->getData($authorCriteriaFilter,false,true));
             }
-            elseif (null !== $request->get('type')
-                && null !== $request->get('letter')
-                && null !== $request->get('sort')
-                && null !== $request->get('order'))
+            elseif (null !== $authorCriteriaFilter['type']
+                && null !== $authorCriteriaFilter['letter']
+                && null !== $authorCriteriaFilter['sort']
+                && null !== $authorCriteriaFilter['order'])
             {
-                return new JsonResponse($this->getData($request,true,true));
+                return new JsonResponse($this->getData($authorCriteriaFilter,true,true));
             }
             else
             {
-                return new JsonResponse($this->getData($request, false, false));
+                return new JsonResponse($this->getData($authorCriteriaFilter, false, false));
             }
+
         }
     }
 
@@ -168,7 +185,7 @@ class MainController extends Controller
      * @param bool $flag_order
      * @return mixed
      */
-    private function getData(Request $request, $flag_filter = false, $flag_order = false){
+    private function getData(array $authorCriteriaFilter, $flag_filter = false, $flag_order = false){
 
         //init
         $filter = new Filter();
@@ -179,7 +196,7 @@ class MainController extends Controller
         //Si le flag filter est true, on doit faire un tri alphabetique
         if($flag_filter){
             //Lorsque la lettre est =plus grande que 1 caractere on charge le wildcard % à la place de la lettre
-            $filter->setValue(strlen($request->get('letter')) > 1 ? '%' : $request->get('letter'));
+            $filter->setValue(strlen($authorCriteriaFilter['letter']) > 1 ? '%' : $authorCriteriaFilter['letter']);
             $filter->setType(FilterInterface::START_WITH);
         }
         else{
@@ -190,7 +207,7 @@ class MainController extends Controller
             //Vide le tableau
             $orderBy->clear();
             //On charge le champ
-            $orderBy->push($request->get('sort'), $request->get('order'));
+            $orderBy->push($authorCriteriaFilter['sort'], $authorCriteriaFilter['order']);
         }
         else{
             $orderBy = new OrderBy();

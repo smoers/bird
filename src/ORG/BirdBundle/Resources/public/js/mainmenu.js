@@ -38,72 +38,76 @@ function setupMainMenu(options){
         //check le layout utilisé
         var layout_cirrus = document.getElementById('treegrid-cycles');
         //Récupérer les cycles existants pour cet auteur
-        var authorid = 0;
+        var authorid = $('#grid-authors').datagrid('getSelected').id;
         var children = '';
-        if(layout_cirrus){
-            authorid = $('#treegrid-cycles').treegrid('getSelected').id
-            children = $('#treegrid-cycles').treegrid('getChildren', authorid);
-        }
-        else{
-            authorid = $('#grid-authors').datagrid('getSelected').id
-        }
+        var parent = '';
+        var parentid = 0;
         /**
-         * Pour tous les layout si pas de children alors on pose les questions
-         * Pour le layout Cirrus, si des children donc cycle on crée un nouveau livre pour ce cycle
+         * dans le cas du layout cirrus
          */
-
-        if(children == '') {
-            //le 'when' permet d'attendre la réponse du server avant d'afficher la fenetre Modal
-            //Et ce du fait que la requete AJAX est asynchrone
-            $.when(
-                getCycle(url['ajax'], authorid)
-            )
-            .then(function (cycles) {
-                //Mise en forme des boutons du Footer
-                var btn_new = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_new">' + language['modal.messages.btn.new'] + '</button>';
-                var btn_no = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_no">' + language['modal.messages.btn.no'] + '</button>';
-                var btn_yes = '';
-                var btn_existing = '';
-                //si des cyles existent, le bouton Yes et le Select sont créés
-                if (cycles.length > 0) {
-                    btn_yes = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_yes">' + language['modal.messages.btn.yes'] + '</button>';
-                    btn_existing = '<div class="col-md-4"><select class="form-control" id="modalMessage_existing">';
-                    cycles.forEach(function (item, index) {
-                        btn_existing = btn_existing + '<option value="' + item.id + '">' + item.title + '</option>';
-                    });
-                    btn_existing = btn_existing + '</select></div>';
-                }
-                //Defini les otpions avec la liste des Cycles
-                $('#modalMessages_title').html('<span class="glyphicon glyphicon-question-sign"></span>');
-                $('#modalMessages_content').html(language['modal.messages.add.book']);
-                $('#modalMessages_footer').html('<div class="row"><div class="col-md-4">' + btn_new + btn_no + btn_yes + "</div>" + btn_existing + '</div>');
-                $('#modalMessages').modal('show');
-                // réponse non pas dans un cycle
-                $('#modalMessage_no').on('click', function () {
-                    $('#modalMessages').modal('hide');
-                    var id = $('#grid-authors').datagrid('getSelected').id;
-                    href = getURL(url['menu-book-add'], id)
-                    window.location.href = href;
+        if(layout_cirrus){
+            selectedid = $('#treegrid-cycles').treegrid('getSelected').id;
+            children = $('#treegrid-cycles').treegrid('getChildren', selectedid);
+            parent = $('#treegrid-cycles').treegrid('getParent', selectedid)
+            alert('parent : ' + parent + " / " +'children : '+children);
+            if(children == '' && parent != null ){
+                parentid = $('#treegrid-cycles').treegrid('getParent', selectedid).id;
+            }
+            else if(children !== '' && parent === null){
+                parentid = selectedid;
+            }
+        }
+        //le 'when' permet d'attendre la réponse du server avant d'afficher la fenetre Modal
+        //Et ce du fait que la requete AJAX est asynchrone
+        $.when(
+            getCycle(url['ajax'], authorid)
+        )
+        .then(function (cycles) {
+            //Mise en forme des boutons du Footer
+            var btn_new = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_new">' + language['modal.messages.btn.new'] + '</button>';
+            var btn_no = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_no">' + language['modal.messages.btn.no'] + '</button>';
+            var btn_yes = '';
+            var btn_existing = '';
+            //si des cyles existent, le bouton Yes et le Select sont créés
+            if (cycles.length > 0) {
+                btn_yes = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_yes">' + language['modal.messages.btn.yes'] + '</button>';
+                btn_existing = '<div class="col-md-4"><select class="form-control" id="modalMessage_existing">';
+                cycles.forEach(function (item, index) {
+                    var selected = '';
+                    if(item.id == parentid){
+                        selected = 'selected'
+                    }
+                    btn_existing = btn_existing + '<option value="' + item.id + '" '+ selected +'>' + item.title + '</option>';
                 });
-                //réponse nouveau cycle
-                $('#modalMessage_new').on('click', function () {
-                    $('#modalMessages').modal('hide');
-                    var id = $('#grid-authors').datagrid('getSelected').id;
-                    href = getURL(url['menu-cycle-new-book-add'], id);
-                    window.location.href = href;
-                });
-                //Réponse cycle existant
-                $('#modalMessage_yes').on('click', function () {
-                    $('#modalMessages').modal('hide');
-                    var id = $('#modalMessage_existing').val();
-                    href = getURL(url['menu-cycle-edit-book-add'], id);
-                    window.location.href = href;
-                });
+                btn_existing = btn_existing + '</select></div>';
+            }
+            //Defini les otpions avec la liste des Cycles
+            $('#modalMessages_title').html('<span class="glyphicon glyphicon-question-sign"></span>');
+            $('#modalMessages_content').html(language['modal.messages.add.book']);
+            $('#modalMessages_footer').html('<div class="row"><div class="col-md-4">' + btn_new + btn_no + btn_yes + "</div>" + btn_existing + '</div>');
+            $('#modalMessages').modal('show');
+            // réponse non pas dans un cycle
+            $('#modalMessage_no').on('click', function () {
+                $('#modalMessages').modal('hide');
+                var id = $('#grid-authors').datagrid('getSelected').id;
+                href = getURL(url['menu-book-add'], id)
+                window.location.href = href;
             });
-        }
-        else{
-
-        }
+            //réponse nouveau cycle
+            $('#modalMessage_new').on('click', function () {
+                $('#modalMessages').modal('hide');
+                var id = $('#grid-authors').datagrid('getSelected').id;
+                href = getURL(url['menu-cycle-new-book-add'], id);
+                window.location.href = href;
+            });
+            //Réponse cycle existant
+            $('#modalMessage_yes').on('click', function () {
+                $('#modalMessages').modal('hide');
+                var id = $('#modalMessage_existing').val();
+                href = getURL(url['menu-cycle-edit-book-add'], id);
+                window.location.href = href;
+            });
+        });
     });
 
     /**

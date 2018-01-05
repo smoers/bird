@@ -221,6 +221,13 @@ class BookController extends Controller
                 //Déplace l'image dans le bon repertoire si elle existe
                 $uploadedImage->move($book->getId());
                 $request->getSession()->getFlashBag()->add('success',$book->getTitle().' '.$trans->trans('book.edit.success'));
+                //active le filtre utilisé lors de l'affichage de la home page
+                if($request->getSession()->has('author_criteria_filter')){
+                    $filter = $request->getSession()->get('author_criteria_filter');
+                    $filter['enabled'] = true;
+                    $request->getSession()->set('author_criteria_filter',$filter);
+
+                }
                 return $this->redirectToRoute('bird_homepage');
             }
         }
