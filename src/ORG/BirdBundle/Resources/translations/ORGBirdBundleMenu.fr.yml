@@ -5,6 +5,10 @@ main.menu.add: Ajouter
 main.menu.edit: Modifier
 main.menu.delete: Supprimer
 main.menu.help: Aide
+main.menu.logout: Déconnexion
+main.menu.signed: Connecté en tant que
+main.menu.profile: Mon profil
+main.menu.password: Changer le mot de passe
 modal.messages.add.book: S'agit-il d'un livre faisant partie d'un cycle ?
 modal.messages.btn.new: Nouveau Cycle
 modal.messages.btn.existing: Cycle Existant

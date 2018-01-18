@@ -35,10 +35,23 @@ use ORG\BirdBundle\Model\ExtendFields\ChoiceTypeExtendField;
 use ORG\BirdBundle\Model\Menu\MenuDisabledTwig;
 use ORG\BirdBundle\Model\Upload\UploadedImage;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class BookController extends Controller
 {
+
+    protected $login;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        parent::setContainer($container);
+        $user = $this->getUser();
+        $this->login = array(
+            'loginAs' => $user->getLastname().", ".$user->getFirstname(),
+            'attributes' => $user->getAttributes(),
+        );
+    }
     /**
      * Cette méthode permet d'ajouter un livre qui n'est pas lié à un cycle
      *
@@ -159,13 +172,8 @@ class BookController extends Controller
             'imageroot' => $uploadedImage,
             'menudisabled' => $menuDisabledTwig,
             'iscycle' => $isCycle,
+            'loginas' => $this->login['loginAs'],
         ));
-
-    }
-
-
-    public function addAction(Request $request)
-    {
 
     }
 
@@ -244,6 +252,7 @@ class BookController extends Controller
             'imageroot' => $uploadedImage,
             'menudisabled' => $menuDisabledTwig,
             'iscycle' => $isCycle,
+            'loginas' => $this->login['loginAs'],
         ));
     }
 

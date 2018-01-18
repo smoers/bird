@@ -48,10 +48,104 @@ class User extends BaseUser
 	 * )
 	 */
 	protected $groups;
-	
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="attributes", type="json_array", nullable=true)
+     */
+	protected $attributes;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lastname", type="string", nullable=false)
+     */
+	protected $lastname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="firstname", type="string", nullable=false)
+     */
+	protected $firstname;
+
 	public function __construct()
 	{
 		parent::__construct();
+		$this->attributes = array();
 		// your own logic
 	}
+
+    public function setLocked($boolean)
+    {
+        // TODO: Implement setLocked() method.
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * @param array $attributes
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param string $lastname
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * @param string $firstname
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+    }
+
+
+
 }

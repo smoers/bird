@@ -49,7 +49,6 @@ function setupMainMenu(options){
             selectedid = $('#treegrid-cycles').treegrid('getSelected').id;
             children = $('#treegrid-cycles').treegrid('getChildren', selectedid);
             parent = $('#treegrid-cycles').treegrid('getParent', selectedid)
-            alert('parent : ' + parent + " / " +'children : '+children);
             if(children == '' && parent != null ){
                 parentid = $('#treegrid-cycles').treegrid('getParent', selectedid).id;
             }
@@ -132,6 +131,9 @@ function setupMainMenu(options){
         if(children == '') {
             var href = url['menu-book-edit'].replace(/\/0(?!.*\/0)/, '/' + id);
             window.location.href = href;
+        }
+        else{
+            var modal = new Modal();
         }
     });
 

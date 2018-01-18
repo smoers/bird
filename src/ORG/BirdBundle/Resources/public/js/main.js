@@ -66,7 +66,7 @@ function setup(options){
 
     //grid-authors definition
     $('#grid-authors').datagrid({
-        url: url['grid-authors'],
+
         singleSelect: true,
         loadMsg: language['main.author.loading.msg'],
         idField: 'id',
@@ -180,6 +180,7 @@ function setup(options){
      */
 
     $('#grid-authors').datagrid({
+        url: url['grid-authors'],
         onSelect:function(index, row){
             if(row){
                 $('#grid-cycles').datagrid('load',{id_author: row.id});
@@ -192,7 +193,6 @@ function setup(options){
             //cette event permet de selectionner le premiere auteur, s'il existe
             if(data.total != 0){
                 $('#grid-authors').datagrid('selectRow',selectedAuthor);
-
             }
             else{
                 //Vide le datagrid des cycle dans le cas ou il n'y a pas d'auteurs pour le filtre
@@ -242,7 +242,14 @@ function setup(options){
                 {field:'Editor',title:language['main.book.editor']},
                 {field:'Collection',title:language['main.book.collection']},
                 {field:'Cycle',title:'cycle'}
-            ]]
+            ]],
+            onSelect: function () {
+            },
+            onLoadSuccess: function(row, data){
+                if(data.total != 0) {
+                    $('#treegrid-cycles').treegrid('select', data[0].id);
+                }
+            }
         });
 
 

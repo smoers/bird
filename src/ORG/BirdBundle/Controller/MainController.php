@@ -30,11 +30,25 @@ use ORG\BirdBundle\Model\Menu\MenuDisabledTwig;
 use ORG\BirdBundle\Model\OrderBy\OrderBy;
 use ORG\BirdBundle\Model\OrderBy\OrderByInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends Controller
 {
+
+    protected $login;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        parent::setContainer($container);
+        $user = $this->getUser();
+        $this->login = array(
+            'loginAs' => $user->getLastname().", ".$user->getFirstname(),
+            'attributes' => $user->getAttributes(),
+        );
+    }
+
 
     /**
      * @param Request $request
@@ -43,7 +57,7 @@ class MainController extends Controller
 	public function indexAction(Request $request){
 
 	    $menuDisabledTwig = new MenuDisabledTwig();
-		return $this->render('ORGBirdBundle:Main:Main.html.twig',array('title' => 'main.title', 'menudisabled' => $menuDisabledTwig));
+		return $this->render('ORGBirdBundle:Main:Main.html.twig',array('title' => 'main.title', 'menudisabled' => $menuDisabledTwig, 'loginas' => $this->login['loginAs']));
 
 	}
 

@@ -3,6 +3,9 @@ User: a49974
 Date: 2/06/2017
  #}
 {% trans_default_domain "ORGBirdBundleMenu" %}
+{% if loginas is not defined %}
+    {% set loginas = '?, ?' %}
+{% endif %}
 
 <ul class="nav navbar-nav">
     <li class="active"><a href="{{ path('bird_homepage') }}" class=""><i class="glyphicon glyphicon-home"></i></a></li>
@@ -16,7 +19,6 @@ Date: 2/06/2017
     </li>
     <li class=" dropdown"><a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'main.menu.main.cycle'|trans }} <span class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li style="{{ menudisabled.disabled('menu_cycle_add') }}"><a href="#"><i class="glyphicon glyphicon-plus"></i> {{ 'main.menu.add'|trans }}</a></li>
             <li style="{{ menudisabled.disabled('menu_cycle_edit') }}"><a href="#"><i class="glyphicon glyphicon-edit"></i> {{ 'main.menu.edit'|trans }}</a></li>
             <li style="{{ menudisabled.disabled('menu_cycle_delete') }}"><a href="#"><i class="glyphicon glyphicon-erase"></i> {{ 'main.menu.delete'|trans }}</a></li>
         </ul>
@@ -36,13 +38,13 @@ Date: 2/06/2017
 
 </ul>
 <ul class="nav navbar-nav pull-right">
-    <li class=" dropdown"><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Signed in as  <span class="caret"></span></a>
+    <li class=" dropdown"><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'main.menu.signed'|trans }} {{ loginas }} <span class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li style="{{ menudisabled.disabled('menu_admin_password') }}"><a href="#">Change Password</a></li>
-            <li style="{{ menudisabled.disabled('menu_admin_profile') }}"><a href="#">My Profile</a></li>
+            <li style="{{ menudisabled.disabled('menu_admin_password') }}"><a href="#">{{ 'main.menu.password'|trans }}</a></li>
+            <li style="{{ menudisabled.disabled('menu_admin_profile') }}"><a href="#">{{ 'main.menu.profile'|trans }}</a></li>
         </ul>
     </li>
-    <li class=""><a href="#">Logout</a></li>
+    <li class=""><a href="#">{{ 'main.menu.logout'|trans }}</a></li>
 </ul>
 
 <script type="text/javascript">

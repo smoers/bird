@@ -43,6 +43,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AuthorController extends Controller
 {
+    protected $login;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        parent::setContainer($container);
+        $user = $this->getUser();
+        $this->login = array(
+            'loginAs' => $user->getLastname().", ".$user->getFirstname(),
+            'attributes' => $user->getAttributes(),
+        );
+    }
+
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -98,7 +110,8 @@ class AuthorController extends Controller
             'title' => 'author.add',
             'form' => $form->createView(),
             'imageroot' => $uploadedImage,
-            'menudisabled' => $menuDisabledTwig
+            'menudisabled' => $menuDisabledTwig,
+            'loginas' => $this->login['loginAs'],
         ));
 
     }
@@ -157,7 +170,8 @@ class AuthorController extends Controller
             'title' => 'author.edit',
             'form' => $form->createView(),
             'imageroot' => $uploadedImage,
-            'menudisabled' => $menuDisabledTwig
+            'menudisabled' => $menuDisabledTwig,
+            'loginas' => $this->login['loginAs'],
         ));
 
 

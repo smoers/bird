@@ -1,0 +1,22 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: 3306
+    database_name: bird
+    database_user: bird_user
+    database_password: Garion01
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: serge.moers@gmail.com
+    mailer_password: null
+    secret: e99d17d859ad7f89871af30e1c01b74e54fffe4a
+    #image authors
+    images_authors_folder: images/authors/
+    #image books
+    images_books_folder: images/books/
+    #Prefix utilisÃ© pour la table system afin de retrouver la liste des valeurs
+    #d'une liste dÃ©roulante pour les champs Ã©tendu de type Choice
+    choice_authors: extend.field.choice.author.
+    choice_cycles: extend.field.choice.cycle.
+    choice_books: extend.field.choice.book.
+    #Configuration
