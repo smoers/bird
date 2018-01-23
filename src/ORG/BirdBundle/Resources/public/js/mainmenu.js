@@ -134,6 +134,8 @@ function setupMainMenu(options){
         }
         else{
             var modal = new Modal();
+            modal.addButton('Cancel');
+            modal.show();
         }
     });
 
@@ -170,4 +172,68 @@ function getCycle(url, authorid){
     });
 
     return result;
+}
+
+/**
+ * Class destinée à l'affichage de la fenetre modal avec les messages
+ */
+class Modal{
+
+    constructor(){
+        //Valeur par default
+        this._index = 0;
+        this._button = new Array();
+        this._title = '<span class="glyphicon glyphicon-question-sign"></span>';
+        this._content = 'Message Content';
+        this._maskFooter = '';
+        this._footer = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_'+ this._index +'">Close</button>';
+    }
+
+    addTitle(value){
+        this._title = value;
+    }
+
+    addContent(value){
+        this._content = value;
+    }
+
+    addHTMLElement(value){
+        this._button = value;
+    }
+
+    addButton(value){
+        this._button.push('<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_'+ this._index +'">' + value + '</button>');
+        this._index++;
+    }
+
+    addMaskFooter(value){
+        this._maskFooter = value;
+    }
+
+    get button(){
+        return this._button;
+    }
+
+    show(){
+        //Construire le footer
+        var mask = '';
+        if(this._maskFooter !== ''){
+            mask = this._maskFooter;
+            this._button.forEach(function(item, index, array){
+                mask.replace('%%'+index+'%%',item);
+            });
+        }
+        else{
+            mask = '<div class="row"><div class="col-md-'+ this._button.length +' text-right">';
+            this._button.forEach(function(item, index, array){
+               mask = mask + item;
+            });
+            mask = mask + '</div></div>'
+        }
+        $('#modalMessages_title').html(this._title);
+        $('#modalMessages_content').html(this._content);
+        $('#modalMessages_footer').html(mask);
+        $('#modalMessages').modal('show');
+    }
+
 }

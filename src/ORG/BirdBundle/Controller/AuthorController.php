@@ -34,6 +34,7 @@ use ORG\BirdBundle\Model\Filter\Filter;
 use ORG\BirdBundle\Model\Menu\MenuDisabledTwig;
 use ORG\BirdBundle\Model\Upload\UploadedImage;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
