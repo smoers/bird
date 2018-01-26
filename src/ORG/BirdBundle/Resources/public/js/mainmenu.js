@@ -63,13 +63,13 @@ function setupMainMenu(options){
         )
         .then(function (cycles) {
             //Mise en forme des boutons du Footer
-            var btn_new = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_new">' + language['modal.messages.btn.new'] + '</button>';
-            var btn_no = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_no">' + language['modal.messages.btn.no'] + '</button>';
-            var btn_yes = '';
+            var modal  = new Modal();
+            modal.addButton(language['modal.messages.btn.new']);
+            modal.addButton(language['modal.messages.btn.no']);
             var btn_existing = '';
             //si des cyles existent, le bouton Yes et le Select sont créés
             if (cycles.length > 0) {
-                btn_yes = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_yes">' + language['modal.messages.btn.yes'] + '</button>';
+                modal.addButton(language['modal.messages.btn.yes']);
                 btn_existing = '<div class="col-md-4"><select class="form-control" id="modalMessage_existing">';
                 cycles.forEach(function (item, index) {
                     var selected = '';
@@ -79,28 +79,29 @@ function setupMainMenu(options){
                     btn_existing = btn_existing + '<option value="' + item.id + '" '+ selected +'>' + item.title + '</option>';
                 });
                 btn_existing = btn_existing + '</select></div>';
+                modal.addHTMLElement(btn_existing);
             }
             //Defini les otpions avec la liste des Cycles
-            $('#modalMessages_title').html('<span class="glyphicon glyphicon-question-sign"></span>');
-            $('#modalMessages_content').html(language['modal.messages.add.book']);
-            $('#modalMessages_footer').html('<div class="row"><div class="col-md-4">' + btn_new + btn_no + btn_yes + "</div>" + btn_existing + '</div>');
-            $('#modalMessages').modal('show');
+            modal.glyphicon('question');
+            modal.addContent(language['modal.messages.add.book']);
+            modal.addMaskFooter('<div class="row"><div class="col-md-4">%%0%%%%1%%%%2%%</div>%%3%%</div>');
+            modal.show();
             // réponse non pas dans un cycle
-            $('#modalMessage_no').on('click', function () {
+            $('#modalMessage_1').on('click', function () {
                 $('#modalMessages').modal('hide');
                 var id = $('#grid-authors').datagrid('getSelected').id;
                 href = getURL(url['menu-book-add'], id)
                 window.location.href = href;
             });
             //réponse nouveau cycle
-            $('#modalMessage_new').on('click', function () {
+            $('#modalMessage_0').on('click', function () {
                 $('#modalMessages').modal('hide');
                 var id = $('#grid-authors').datagrid('getSelected').id;
                 href = getURL(url['menu-cycle-new-book-add'], id);
                 window.location.href = href;
             });
             //Réponse cycle existant
-            $('#modalMessage_yes').on('click', function () {
+            $('#modalMessage_2').on('click', function () {
                 $('#modalMessages').modal('hide');
                 var id = $('#modalMessage_existing').val();
                 href = getURL(url['menu-cycle-edit-book-add'], id);
@@ -134,7 +135,10 @@ function setupMainMenu(options){
         }
         else{
             var modal = new Modal();
-            modal.addButton('Cancel');
+            modal.addButton(language['modal.messages.btn.close']);
+            modal.glyphicon('warning');
+            modal.addTitle(language['modal.messages.title.warning']);
+            modal.addContent(language['modal.messages.no.book']);
             modal.show();
         }
     });
@@ -172,68 +176,4 @@ function getCycle(url, authorid){
     });
 
     return result;
-}
-
-/**
- * Class destinée à l'affichage de la fenetre modal avec les messages
- */
-class Modal{
-
-    constructor(){
-        //Valeur par default
-        this._index = 0;
-        this._button = new Array();
-        this._title = '<span class="glyphicon glyphicon-question-sign"></span>';
-        this._content = 'Message Content';
-        this._maskFooter = '';
-        this._footer = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_'+ this._index +'">Close</button>';
-    }
-
-    addTitle(value){
-        this._title = value;
-    }
-
-    addContent(value){
-        this._content = value;
-    }
-
-    addHTMLElement(value){
-        this._button = value;
-    }
-
-    addButton(value){
-        this._button.push('<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_'+ this._index +'">' + value + '</button>');
-        this._index++;
-    }
-
-    addMaskFooter(value){
-        this._maskFooter = value;
-    }
-
-    get button(){
-        return this._button;
-    }
-
-    show(){
-        //Construire le footer
-        var mask = '';
-        if(this._maskFooter !== ''){
-            mask = this._maskFooter;
-            this._button.forEach(function(item, index, array){
-                mask.replace('%%'+index+'%%',item);
-            });
-        }
-        else{
-            mask = '<div class="row"><div class="col-md-'+ this._button.length +' text-right">';
-            this._button.forEach(function(item, index, array){
-               mask = mask + item;
-            });
-            mask = mask + '</div></div>'
-        }
-        $('#modalMessages_title').html(this._title);
-        $('#modalMessages_content').html(this._content);
-        $('#modalMessages_footer').html(mask);
-        $('#modalMessages').modal('show');
-    }
-
 }

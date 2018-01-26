@@ -37,7 +37,9 @@
 
       <title>{% block title %}Bird Web{% endblock %}</title>
       {% block javascripts %}
-      
+          {% javascripts '@ORGBirdBundle/Resources/public/js/Modal.class.js' %}
+		  <script src="{{ asset_url }}" type="text/javascript"></script>
+          {% endjavascripts %}
       {% endblock %}
 
       {% block stylesheets %}

@@ -6,3 +6,4 @@ author.ajax.warning: Attention
 book.add.success: a été ajouté avec succès.
 book.no.found.warning: Aucun livre n'a été rouvé avec cette ID
 book.edit.success: a été modifé avec succès.
+cycle.no.found.warning: Aucun cycle n'a été rouvé avec cette ID

@@ -14,4 +14,8 @@ modal.messages.btn.new: Nouveau Cycle
 modal.messages.btn.existing: Cycle Existant
 modal.messages.btn.no: Non
 modal.messages.btn.yes: Oui
+modal.messages.btn.close: Fermer
+modal.messages.no.book: Vous n'avez pas choisi un livre, mais un cycle !
+modal.messages.title.warning: Attention
+
 
