@@ -26,4 +26,5 @@ author.add: Ajout d'un auteur
 author.edit: Edition d'un auteur
 book.add: Ajout d'un livre pour
 book.edit: Edition d'un livre pour
+cycle.edit: Edition d'un cycle pour
 modal.messages.btn.close: Fermer

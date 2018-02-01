@@ -33,6 +33,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -46,6 +47,7 @@ class CycleType extends AbstractType
     {
         $disabled = $options['disabled'];
         $isCycle = $options['iscycle'];
+        $isEdit = $options['isedit'];
 
         $builder->add('type',EntityType::class,array(
             'class' => 'ORGBirdBundle:System',
@@ -84,6 +86,13 @@ class CycleType extends AbstractType
             'error_bubbling' => true,
 
         ));
+
+        if($isEdit){
+            $builder->add('save', SubmitType::class, array(
+                'label' => 'form.cyclebook.save',
+                'translation_domain' => 'ORGBirdBundleCycleBook',
+            ));;
+        }
 
         //Si nous sommes dans le case d'un cycle
         if($isCycle){
@@ -137,6 +146,7 @@ class CycleType extends AbstractType
             'uploaded_image' => null,
             'choice_type_extend_field' => null,
             'iscycle' => false,
+            'isedit' => false,
         ));
     }
 

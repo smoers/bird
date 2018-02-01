@@ -1,0 +1,130 @@
+{#
+User: a49974
+Date: 9/08/2017
+ #}
+{% extends "ORGBirdBundle::layout.html.twig" %}
+{% trans_default_domain "ORGBirdBundleCycleBook" %}
+
+{% block menu %}
+    {% include 'ORGBirdBundle:Menu:mainmenu.html.twig' %}
+{% endblock %}
+
+{% block bird_body %}
+    <div class="well">
+
+    {% form_theme form 'ORGBirdBundle:Form:form_errors.html.twig' %}
+    {{ form_start(form, {'attr': {'class': 'form-horizontal', 'id': 'form'}}) }}
+        <table style="width: 100%">
+            <tr>
+                <td>
+                    {{ form_errors(form) }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        {{ form_label(form.title, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                        {{ form_errors(form.title) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.title, {'attr': {'class': 'form-control input-sm'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.authors, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                        {{ form_errors(form.authors) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.authors, {'attr': {'class': 'form-control input-sm'}}) }}
+                        </div>
+                    </div>
+                    <div style="margin-left: 20px; margin-bottom: 20px">
+                        <ul class="nav nav-tabs">
+                            <li class="active"  style="border: none"><a href="#tab1default" data-toggle="pill">{{ 'form.cyclebook.cycle.tab.1'|trans }}</a></li>
+                            <li  style="border: none"><a href="#tab2default" data-toggle="pill">{{ 'form.cyclebook.cycle.tab.2'|trans }}</a></li>
+                        </ul>
+                        {# Start TAB #}
+                        <div style="border: #dddddd 2px solid; padding: 10px; ">
+                            <div class="tab-content" style="">
+                                <div class="tab-pane fade in active" id="tab1default">
+                                    <div class="form-group">
+                                        {{ form_label(form.type, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                        {{ form_errors(form.type) }}
+                                        <div class="col-sm-9">
+                                            {{ form_widget(form.type, {'attr': {'class': 'form-control input-sm'}}) }}
+                                        </div>
+                                    </div>
+                                    {# Champ nbrvolume#}
+                                    <div class="form-group">
+                                        {{ form_label(form.nbrvolume, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                        {{ form_errors(form.nbrvolume) }}
+                                        <div class="col-sm-9">
+                                            {{ form_widget(form.nbrvolume, {'attr': {'class': 'form-control input-sm'}}) }}
+                                        </div>
+                                    </div>
+                                    {# Champ comment#}
+                                    <div class="form-group">
+                                        {{ form_label(form.comment, '',{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                        {{ form_errors(form.comment) }}
+                                        <div class="col-sm-9">
+                                            {{ form_widget(form.comment, {'attr': {'class': 'form-control input-sm'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {# TAB 2 Champs etendus#}
+                                <div class="tab-pane fade" id="tab2default">
+                                    {% if form.linkfieldscycles is defined %}
+                                        {% for linkfield in form.linkfieldscycles %}
+                                            <div class="form-group">
+                                                {{ form_label(linkfield.field,'' ,{'label_attr': {'class': 'col-sm-3 control-label small'}}) }}
+                                                <div class="col-sm-3">
+                                                    {{ form_widget(linkfield.field, {'attr': {'class': 'form-control input-sm'}}) }}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                {{ form_widget(linkfield.type) }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                </td>
+            </tr>
+        </table>
+        {#Footer#}
+        <div class="row">
+            <div class="col-sm-12 text-right">
+                {{ form_widget(form.save,{'attr': {'class': 'btn btn-primary'}}) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+    {# Modal pour afficher l'image de l'auteur en grand format#}
+    <div class="modal fade" id="enlargeImageModal" tabindex="-1" role="dialog" aria-labelledby="enlargeImageModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="" class="enlargeImageModalSource" style="width: 100%; max-width: 400px">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            var options = {};
+            var url = {};
+            options['language'] = 'fr';
+            options['url'] = url;
+            setup(options);
+        });
+
+    </script>
+    {% javascripts '@ORGBirdBundle/Resources/public/js/cycleForm.js' %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}

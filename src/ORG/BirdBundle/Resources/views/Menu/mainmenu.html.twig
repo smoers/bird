@@ -19,7 +19,7 @@ Date: 2/06/2017
     </li>
     <li class=" dropdown"><a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'main.menu.main.cycle'|trans }} <span class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li style="{{ menudisabled.disabled('menu_cycle_edit') }}"><a href="#"><i class="glyphicon glyphicon-edit"></i> {{ 'main.menu.edit'|trans }}</a></li>
+            <li style="{{ menudisabled.disabled('menu_cycle_edit') }}"><a href="#" id="menu_cycle_edit"><i class="glyphicon glyphicon-edit"></i> {{ 'main.menu.edit'|trans }}</a></li>
             <li style="{{ menudisabled.disabled('menu_cycle_delete') }}"><a href="#"><i class="glyphicon glyphicon-erase"></i> {{ 'main.menu.delete'|trans }}</a></li>
         </ul>
     </li>
@@ -44,7 +44,7 @@ Date: 2/06/2017
             <li style="{{ menudisabled.disabled('menu_admin_profile') }}"><a href="#">{{ 'main.menu.profile'|trans }}</a></li>
         </ul>
     </li>
-    <li class=""><a href="#">{{ 'main.menu.logout'|trans }}</a></li>
+    <li class=""><a href="{{ path('fos_user_security_logout') }}">{{ 'main.menu.logout'|trans }}</a></li>
 </ul>
 
 <script type="text/javascript">
@@ -60,6 +60,7 @@ Date: 2/06/2017
         language['modal.messages.btn.yes'] = '{{ 'modal.messages.btn.yes'|trans }}';
         language['modal.messages.btn.close'] = '{{ 'modal.messages.btn.close'|trans }}';
         language['modal.messages.no.book'] = '{{ 'modal.messages.no.book'|trans }}';
+        language['modal.messages.no.cycle'] = '{{ 'modal.messages.no.cycle'|trans }}';
         language['modal.messages.title.warning'] = '{{ 'modal.messages.title.warning'|trans }}';
 
         //Tableau avec les URL's
@@ -69,6 +70,7 @@ Date: 2/06/2017
         url['menu-cycle-new-book-add'] = '{{ path('bird_book_add',{'idAuthor': 0, 'isCycle': 'true'}) }}';
         url['menu-cycle-edit-book-add'] = '{{ path('bird_book_add',{'idAuthor': 0, 'isCycle': 'true', 'isNew': 'false'}) }}';
         url['menu-book-edit'] = '{{ path('bird_book_edit',{'id': 0}) }}';
+        url['menu-cycle-edit'] = '{{ path('bird_cycle_edit',{'id': 0}) }}';
         url['ajax'] = '{{ path('bird_ajax') }}';
         options['language'] = language;
         options['url'] = url;

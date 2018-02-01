@@ -143,6 +143,38 @@ function setupMainMenu(options){
         }
     });
 
+    /**
+     * permet d'éditer un cycle
+     */
+    $('#menu_cycle_edit').on('click', function () {
+        //check le layout utilisé
+        var layout_cirrus = document.getElementById('treegrid-cycles');
+        //Récupérer les cycles existants pour cet auteur
+        var id = 0;
+        var children = '';
+        if(layout_cirrus){
+            id = $('#treegrid-cycles').treegrid('getSelected').id;
+            children = $('#treegrid-cycles').treegrid('getChildren', id);
+        }
+        else {
+            id = $('#grid-cycles').datagrid('getSelected').id;
+        }
+
+        if(children != ''){
+            var href = getURL(url['menu-cycle-edit'],id);
+            window.location.href = href;
+        }
+        else{
+            var modal = new Modal();
+            modal.addButton(language['modal.messages.btn.close']);
+            modal.glyphicon('warning');
+            modal.addTitle(language['modal.messages.title.warning']);
+            modal.addContent(language['modal.messages.no.cycle']);
+            modal.show();
+        }
+
+    })
+
 }
 
 /**

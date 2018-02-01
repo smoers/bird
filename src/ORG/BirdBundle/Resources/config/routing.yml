@@ -1,3 +1,5 @@
+#Security
+
 #Dashboard
 bird_homepage:
   path: /
@@ -60,5 +62,15 @@ bird_book_edit:
     _controller: ORGBirdBundle:Book:editbook
   requirements:
     id: \d+
+
+######
+#Cycle
+bird_cycle_edit:
+  path: /cycle/edit/{id}
+  defaults:
+    _controller: ORGBirdBundle:Cycle:edit
+  requirements:
+    id: \d+
+
 
 

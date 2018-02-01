@@ -16,6 +16,7 @@ modal.messages.btn.no: Non
 modal.messages.btn.yes: Oui
 modal.messages.btn.close: Fermer
 modal.messages.no.book: Vous n'avez pas choisi un livre, mais un cycle !
+modal.messages.no.cycle: Vous n'avez pas choisi un cycle, mais un livre !
 modal.messages.title.warning: Attention
 
 
