@@ -40,7 +40,7 @@ Date: 2/06/2017
 <ul class="nav navbar-nav pull-right">
     <li class=" dropdown"><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'main.menu.signed'|trans }} {{ loginas }} <span class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li style="{{ menudisabled.disabled('menu_admin_password') }}"><a href="#">{{ 'main.menu.password'|trans }}</a></li>
+            <li style="{{ menudisabled.disabled('menu_admin_password') }}"><a href="#" id="menu_password_change">{{ 'main.menu.password'|trans }}</a></li>
             <li style="{{ menudisabled.disabled('menu_admin_profile') }}"><a href="#">{{ 'main.menu.profile'|trans }}</a></li>
         </ul>
     </li>
@@ -62,7 +62,13 @@ Date: 2/06/2017
         language['modal.messages.no.book'] = '{{ 'modal.messages.no.book'|trans }}';
         language['modal.messages.no.cycle'] = '{{ 'modal.messages.no.cycle'|trans }}';
         language['modal.messages.title.warning'] = '{{ 'modal.messages.title.warning'|trans }}';
-
+        language['modal.change.password.title'] = '{{ 'modal.change.password.title'|trans }}';
+        language['modal.change.password.save'] = '{{ 'modal.change.password.save'|trans }}';
+        language['modal.change.password.cancel'] = '{{ 'modal.change.password.cancel'|trans }}';
+        language['modal.change.password.old'] = '{{ 'modal.change.password.old'|trans }}';
+        language['modal.change.password.new'] = '{{ 'modal.change.password.new'|trans }}';
+        language['modal.change.password.repeat'] = '{{ 'modal.change.password.repeat'|trans }}';
+        language['modal.change.password.old.empty'] = '{{ 'modal.change.password.old.empty'|trans }}';
         //Tableau avec les URL's
         var url = {};
         url['menu-author-edit'] = '{{ path('bird_author_edit',{'id': 0}) }}';
@@ -72,6 +78,7 @@ Date: 2/06/2017
         url['menu-book-edit'] = '{{ path('bird_book_edit',{'id': 0}) }}';
         url['menu-cycle-edit'] = '{{ path('bird_cycle_edit',{'id': 0}) }}';
         url['ajax'] = '{{ path('bird_ajax') }}';
+        url['bird-change-password'] = '{{ path('bird_change_password') }}';
         options['language'] = language;
         options['url'] = url;
         setupMainMenu(options);

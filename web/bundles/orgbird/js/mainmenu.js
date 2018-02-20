@@ -85,6 +85,7 @@ function setupMainMenu(options){
             modal.glyphicon('question');
             modal.addContent(language['modal.messages.add.book']);
             modal.addMaskFooter('<div class="row"><div class="col-md-4">%%0%%%%1%%%%2%%</div>%%3%%</div>');
+            modal.size = Modal.Size.LARGE;
             modal.show();
             // réponse non pas dans un cycle
             $('#modalMessage_1').on('click', function () {
@@ -139,6 +140,7 @@ function setupMainMenu(options){
             modal.glyphicon('warning');
             modal.addTitle(language['modal.messages.title.warning']);
             modal.addContent(language['modal.messages.no.book']);
+            modal.size = Modal.Size.LARGE;
             modal.show();
         }
     });
@@ -170,9 +172,55 @@ function setupMainMenu(options){
             modal.glyphicon('warning');
             modal.addTitle(language['modal.messages.title.warning']);
             modal.addContent(language['modal.messages.no.cycle']);
+            modal.size = Modal.Size.LARGE;
             modal.show();
         }
 
+    })
+
+    /**
+     * Changement de mot de passe
+     */
+    $('#menu_password_change').on('click', function () {
+        var modal = new Modal();
+        var content ='<div class="container-fluid"><div class="row"><div class="form-group"><label for="old" class="col-sm-4 control-label h6">'+ language['modal.change.password.old'] +'</label><div class="col-sm-8"><input type="password" class="form-control" id="old" placeholder="Password"></div></div></div>';
+        content = content + '<div class="row"><div class="form-group"><label for="new" class="col-sm-4 control-label h6">'+ language['modal.change.password.new'] +'</label><div class="col-sm-8"><input type="password" class="form-control" id="new" placeholder="Password"></div></div></div>';
+        content = content + '<div class="row"><div class="form-group"><label for="repeat" class="col-sm-4 control-label h6">'+ language['modal.change.password.repeat'] +'</label><div class="col-sm-8"><input type="password" class="form-control" id="repeat" placeholder="Password"></div></div></div></div>';
+        modal.addContent(content);
+        modal.glyphicon('question');
+        modal.addTitle(language['modal.change.password.title']);
+        modal.addButton(language['modal.change.password.save']);
+        modal.addButton(language['modal.change.password.cancel']);
+        modal.size = Modal.Size.SMALL;
+        modal.show();
+
+        $('#modalMessage_0').on('click', function () {
+            var _old = $('#old').val();
+            var _new =  $('#new').val();
+            var _repeat = $('#repeat').val();
+            if(_old == '') {
+                modal.showAlert(language['modal.change.password.old.empty'], Modal.Alert.WARNING);
+            }else if(_new == '' || _repeat == ''){
+                alert('New password is empty');
+            }else if (_new != _repeat){
+                alert('New != Repeat');
+            }else {
+                $.when(
+                    changePassword(url['bird-change-password'],_old,_new)
+                ).then(function (result) {
+                    if(result.return){
+                        modal.showAlert('test',Modal.Alert.SUCCESS);
+                    }else {
+                        modal.showAlert('Error',Modal.Alert.WARNING);
+                    };
+                });    
+            }
+        });
+
+
+        $('#modalMessage_1').on('click', function () {
+            modal.close();
+        });
     })
 
 }
@@ -207,5 +255,30 @@ function getCycle(url, authorid){
         }
     });
 
+    return result;
+}
+
+/**
+ * Requete Ajax pour changer le mot de passe utilisateur
+ * @param url
+ * @param currentPassword
+ * @param newPassword
+ */
+function changePassword(url, currentPassword, newPassword){
+    var result = $.ajax({
+        url: url,
+        method: 'POST',
+        data: { old: currentPassword, new: newPassword},
+        success: function(data){
+            result = data;
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log(textStatus+' := '+errorThrown);
+        },
+        complete: function(response, status, xhr) {
+            console.log(status);
+        }
+    });
+    
     return result;
 }

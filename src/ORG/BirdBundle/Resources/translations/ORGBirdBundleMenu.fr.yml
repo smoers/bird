@@ -18,5 +18,12 @@ modal.messages.btn.close: Fermer
 modal.messages.no.book: Vous n'avez pas choisi un livre, mais un cycle !
 modal.messages.no.cycle: Vous n'avez pas choisi un cycle, mais un livre !
 modal.messages.title.warning: Attention
-
-
+modal.change.password.title: Changer votre mot de passe
+modal.change.password.save: Changer
+modal.change.password.cancel: Annuler
+modal.change.password.old: Actuel
+modal.change.password.new: Nouveau
+modal.change.password.repeat: Répéter
+modal.change.password.old.empty: Vous devez introduire votre mot de passe actuel
+modal.change.password.new.empty: Vous devez introduire un nouveau mot de passe
+modal.change.password.new.confirm: Votre nouveau mot de passe ne correspond pas à la confirmation

@@ -66,6 +66,7 @@ class ChangePasswordController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            var_dump($request->request);exit;
             /** @var $userManager UserManagerInterface */
             $userManager = $this->get('fos_user.user_manager');
 

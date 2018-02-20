@@ -1,4 +1,13 @@
 #Security
+bird_login:
+  path: /login
+  defaults:
+    _controller: ORGBirdBundle:Security:login
+
+bird_change_password:
+  path: /change_password
+  defaults:
+    _controller: ORGBirdBundle:Security:changePassword
 
 #Dashboard
 bird_homepage:

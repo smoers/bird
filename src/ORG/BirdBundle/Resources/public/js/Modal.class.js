@@ -22,7 +22,24 @@ class Modal{
         this._content = 'Message Content';
         this._maskFooter = '';
         this._footer = '<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_'+ this._index +'">Close</button>';
-        this._col = 13;
+        this._modalSize = Modal.Size.NORMAL;
+    }
+
+    static get Size(){
+        return {
+            SMALL: 'modal-sm',
+            NORMAL: '',
+            LARGE: 'modal-lg'
+        };
+    }
+
+    static get Alert(){
+        return {
+            SUCCESS: 'alert-success',
+            INFO: 'alert-info',
+            WARNING: 'alert-warning',
+            DANGER: 'alert-danger'
+        };
     }
 
     /**
@@ -47,7 +64,6 @@ class Modal{
      */
     addHTMLElement(value){
         this._button.push(value);
-        this.calBootstrapColumn();
     }
 
     /**
@@ -57,8 +73,7 @@ class Modal{
      * @param value
      */
     addButton(value){
-        this._button.push('<button type="button" class="btn btn-default" data-dismiss="modal" id="modalMessage_'+ this._index +'">' + value + '</button>');
-        this.calBootstrapColumn();
+        this._button.push('<button type="button" class="btn btn-default" id="modalMessage_'+ this._index +'">' + value + '</button>');
         this._index++;
     }
 
@@ -69,15 +84,6 @@ class Modal{
      */
     addMaskFooter(value){
         this._maskFooter = value;
-    }
-
-    /**
-     * dérémente le nombre de colonne Bootstrap
-     */
-    calBootstrapColumn(){
-        if(this._col >= 4){
-            this._col--;
-        }
     }
 
     /**
@@ -94,19 +100,20 @@ class Modal{
     }
 
     /**
-     * retourne l'index des colonnes Bootstrap
-     * @returns {number}
-     */
-    get bootstrapColumn(){
-        return this._col;
-    }
-
-    /**
      * retourne un tableau avec la definition des boutons
      * @returns {Array}
      */
     get button(){
         return this._button;
+    }
+
+    /**
+     * Defini la taille de la fenetre modal
+     * @param value
+     */
+    set size(value){
+        this._modalSize = value;
+        console.log(this._modalSize);
     }
 
     /**
@@ -122,13 +129,18 @@ class Modal{
             });
             mask = mask.replace(/%%\d+%%/g, '');
         }
-        else{
-            mask = '<div class="row">';
+        else if(this._button.length !== 0){
+            mask = '<div class="row col-md-12">';
             this._button.forEach(function(item, index, array) {
-                mask = mask + '<div class="col-md-'+ this.bootstrapColumn +' text-right">' + item + '</div>';
+                mask = mask + item;
             },this);
             mask = mask + '</div>'
         }
+        else{
+            mask = '<div class="row col-md-12">' + this._footer + '</div>';
+        }
+        console.log(this._modalSize);
+        $('.modal-dialog').addClass(this._modalSize);
         $('#modalMessages_title').html(this._glyphicon + this._title);
         $('#modalMessages_content').html(this._content);
         $('#modalMessages_footer').html(mask);
@@ -136,16 +148,28 @@ class Modal{
     }
 
     /**
+     * Ferme la fenetre modal
+     */
+    close(){
+        $('#modalMessages').modal('hide');
+    }
+
+    showAlert(message, type){
+        var alert =   '<div class="alert '+ type +' alert-dismissable h6"><a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>'+ message +'</div>'
+        $('#modalMessages_content').prepend(alert);
+    }
+
+    /**
      * Corps du Modal
      * @returns {string}
      */
     get modalCore(){
-        return '<div class="modal fade" id="modalMessages" role="dialog">\n' +
-            '\t<div class="modal-dialog modal-lg">\n' +
+        return '<div class="modal fade" id="modalMessages" role="dialog" data-keyboard="false" data-backdrop="static">\n' +
+            '\t<div class="modal-dialog">\n' +
             '\t\t<div class="modal-content">\n' +
             '\t\t\t<div class="modal-header">\n' +
             '\t\t\t\t<button type="button" class="close" data-dismiss="modal">&times;</button>\n' +
-            '\t\t\t\t<h4 class="modal-title" id="modalMessages_title">Modal Header</h4>\n' +
+            '\t\t\t\t<h5 class="modal-title" id="modalMessages_title">Modal Header</h5>\n' +
             '\t\t\t</div>\n' +
             '\t\t\t<div class="modal-body">\n' +
             '\t\t\t\t<p id="modalMessages_content">This is a small modal.</p>\n' +
