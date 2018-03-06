@@ -1,0 +1,48 @@
+{#
+User: a49974
+Date: 23/02/2018
+ #}
+{% trans_default_domain "ORGBirdBundleSecurity" %}
+{% extends "ORGBirdBundle::layout.html.twig" %}
+
+{% block menu %}
+    {% include 'ORGBirdBundle:Menu:mainmenu.html.twig' %}
+{% endblock %}
+
+{% block bird_body %}
+    <div class="well">
+        <div class="row text-center text-primary"><a href="{{ path('bird_edit_profile') }}"><span class="glyphicon glyphicon-edit"> {{ 'security.profile.edit' | trans }}</span></a> </div>
+        <div class="row">
+            <div class="col-sm-4 texte-list">{{ 'security.profile.username'|trans }}</div>
+            <div class="col-sm-8">{{ user.username }}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 texte-list">{{ 'security.profile.firstname'|trans }}</div>
+            <div class="col-sm-8">{{ user.firstname }}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 texte-list">{{ 'security.profile.lastname'|trans }}</div>
+            <div class="col-sm-8">{{ user.lastname }}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 texte-list">{{ 'security.profile.email'|trans }}</div>
+            <div class="col-sm-8">{{ user.email }}</div>
+        </div>
+        {% for key, value in user.attributes %}
+        <div class="row">
+            {% set tag_trans = 'security.profile.' ~ key %}
+            <div class="col-sm-4 texte-list">{{ tag_trans|trans }}</div>
+            <div class="col-sm-8">{{ value }}</div>
+        </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-sm-4 texte-list">{{ 'security.profile.roles'|trans }}</div>
+            <div class="col-sm-8">{% for role in user.roles %}{{ role ~ ' ,' }}{% endfor %}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 texte-list">{{ 'security.profile.lastlogin'|trans }}</div>
+            <div class="col-sm-8">{{ user.lastlogin | date("d-m-Y H:i:s")}}</div>
+        </div>
+    </div>
+
+{% endblock %}

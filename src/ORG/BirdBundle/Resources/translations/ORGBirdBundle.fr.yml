@@ -28,3 +28,5 @@ book.add: Ajout d'un livre pour
 book.edit: Edition d'un livre pour
 cycle.edit: Edition d'un cycle pour
 modal.messages.btn.close: Fermer
+security.profile.title.show: Votre profil
+security.profile.title.edit: Edition de votre profil

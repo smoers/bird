@@ -9,6 +9,15 @@ bird_change_password:
   defaults:
     _controller: ORGBirdBundle:Security:changePassword
 
+bird_show_profile:
+  path: /show_profile
+  defaults:
+    _controller: ORGBirdBundle:Security:showProfile
+
+bird_edit_profile:
+  path: /edit_profile
+  defaults:
+    _controller: ORGBirdBundle:Security:editProfile
 #Dashboard
 bird_homepage:
   path: /

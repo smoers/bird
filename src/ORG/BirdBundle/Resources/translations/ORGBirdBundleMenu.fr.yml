@@ -24,6 +24,8 @@ modal.change.password.cancel: Annuler
 modal.change.password.old: Actuel
 modal.change.password.new: Nouveau
 modal.change.password.repeat: Répéter
-modal.change.password.old.empty: Vous devez introduire votre mot de passe actuel
-modal.change.password.new.empty: Vous devez introduire un nouveau mot de passe
-modal.change.password.new.confirm: Votre nouveau mot de passe ne correspond pas à la confirmation
+modal.change.password.old.empty: Vous devez introduire votre mot de passe actuel.
+modal.change.password.new.empty: Vous devez introduire un nouveau mot de passe.
+modal.change.password.new.confirm: Votre nouveau mot de passe ne correspond pas à la confirmation.
+modal.change.password.new.success: Votre mot de passe a été changer avec succès.
+modal.change.password.old.error: Votre mot de passe actuel n'est pas correct.

@@ -41,7 +41,7 @@ Date: 2/06/2017
     <li class=" dropdown"><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'main.menu.signed'|trans }} {{ loginas }} <span class="caret"></span></a>
         <ul class="dropdown-menu">
             <li style="{{ menudisabled.disabled('menu_admin_password') }}"><a href="#" id="menu_password_change">{{ 'main.menu.password'|trans }}</a></li>
-            <li style="{{ menudisabled.disabled('menu_admin_profile') }}"><a href="#">{{ 'main.menu.profile'|trans }}</a></li>
+            <li style="{{ menudisabled.disabled('menu_admin_profile') }}"><a href="{{ path('bird_show_profile') }}">{{ 'main.menu.profile'|trans }}</a></li>
         </ul>
     </li>
     <li class=""><a href="{{ path('fos_user_security_logout') }}">{{ 'main.menu.logout'|trans }}</a></li>
@@ -69,6 +69,10 @@ Date: 2/06/2017
         language['modal.change.password.new'] = '{{ 'modal.change.password.new'|trans }}';
         language['modal.change.password.repeat'] = '{{ 'modal.change.password.repeat'|trans }}';
         language['modal.change.password.old.empty'] = '{{ 'modal.change.password.old.empty'|trans }}';
+        language['modal.change.password.new.empty'] = '{{ 'modal.change.password.new.empty'|trans }}';
+        language['modal.change.password.new.confirm'] = '{{ 'modal.change.password.new.confirm'|trans }}';
+        language['modal.change.password.new.success'] = '{{ 'modal.change.password.new.success'|trans }}';
+        language['modal.change.password.old.error'] = '{{ 'modal.change.password.old.error'|trans }}';
         //Tableau avec les URL's
         var url = {};
         url['menu-author-edit'] = '{{ path('bird_author_edit',{'id': 0}) }}';

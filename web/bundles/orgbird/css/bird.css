@@ -122,3 +122,11 @@
 .icon-book{
     background: url('icons/book-16.png') no-repeat center;
 }
+
+/*******************************************
+* Texte commun
+*/
+
+.texte-list{
+    font-weight: bold;
+}

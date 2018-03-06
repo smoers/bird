@@ -19,4 +19,12 @@ parameters:
     choice_authors: extend.field.choice.author.
     choice_cycles: extend.field.choice.cycle.
     choice_books: extend.field.choice.book.
-    #Configuration
+    #Paramètre de Configuration du profil
+    attributes:
+        layout:
+            cirrus: cirrus
+            stratocumulus: stratocumulus
+        language:
+            Français: fr
+            Nederlands: nl
+            English: en

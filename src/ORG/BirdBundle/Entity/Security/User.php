@@ -24,8 +24,11 @@
 
 namespace ORG\BirdBundle\Entity\Security;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use ORG\BirdBundle\Model\Elements\Attribute;
+use ORG\BirdBundle\Model\Util\AttributesBuilder;
 
 /**
  * @ORM\Entity
@@ -57,6 +60,11 @@ class User extends BaseUser
 	protected $attributes;
 
     /**
+     * @var ArrayCollection
+     */
+	protected $attributesCollection;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", nullable=false)
@@ -74,6 +82,7 @@ class User extends BaseUser
 	{
 		parent::__construct();
 		$this->attributes = array();
+		$this->attributesCollection = new ArrayCollection();
 		// your own logic
 	}
 
@@ -96,6 +105,35 @@ class User extends BaseUser
     public function setAttributes($attributes)
     {
         $this->attributes = $attributes;
+        $attributesBuilder = new AttributesBuilder($attributes);
+        $this->attributesCollection = $attributesBuilder->getCollection();
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAttributesCollection()
+    {
+        $attributesBuilder = new AttributesBuilder($this->attributes);
+        $this->attributesCollection = $attributesBuilder->getCollection();
+        return $this->attributesCollection;
+    }
+
+    /**
+     * @param Attribute $attribute
+     */
+    public function addAttributesCollection(Attribute $attribute){
+        if(!$this->attributesCollection->contains($attribute)){
+            $this->attributesCollection->add($attribute);
+            $attributesBuilder = new AttributesBuilder($this->attributesCollection);
+            $this->attributes = $attributesBuilder->getArray();
+        }
+    }
+
+    public function removeAttributesCollection(Attribute $attribute){
+        $this->attributesCollection->removeElement($attribute);
+        $attributesBuilder = new AttributesBuilder($this->attributesCollection);
+        $this->attributes = $attributesBuilder->getArray();
     }
 
     /**

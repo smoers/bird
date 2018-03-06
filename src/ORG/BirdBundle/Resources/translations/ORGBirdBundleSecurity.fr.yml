@@ -1,0 +1,11 @@
+security.profile.firstname: Prénom
+security.profile.lastname: Nom
+security.profile.email: E-mail
+security.profile.attributes: Attributs
+security.profile.username: Nom d'utilisateur
+security.profile.roles: Rôles
+security.profile.lastlogin: Dernière connexion
+security.profile.save: Enregistrer
+security.profile.language: Langue
+security.profile.layout: Interface principal
+security.profile.edit: Editer

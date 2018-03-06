@@ -220,6 +220,8 @@ L\'équipe
     'book.edit' => 'Edition d\'un livre pour',
     'cycle.edit' => 'Edition d\'un cycle pour',
     'modal.messages.btn.close' => 'Fermer',
+    'security.profile.title.show' => 'Votre profil',
+    'security.profile.title.edit' => 'Edition de votre profil',
   ),
   'ORGBirdBundleAuthor' => 
   array (
@@ -291,9 +293,25 @@ L\'équipe
     'modal.change.password.old' => 'Actuel',
     'modal.change.password.new' => 'Nouveau',
     'modal.change.password.repeat' => 'Répéter',
-    'modal.change.password.old.empty' => 'Vous devez introduire votre mot de passe actuel',
-    'modal.change.password.new.empty' => 'Vous devez introduire un nouveau mot de passe',
-    'modal.change.password.new.confirm' => 'Votre nouveau mot de passe ne correspond pas à la confirmation',
+    'modal.change.password.old.empty' => 'Vous devez introduire votre mot de passe actuel.',
+    'modal.change.password.new.empty' => 'Vous devez introduire un nouveau mot de passe.',
+    'modal.change.password.new.confirm' => 'Votre nouveau mot de passe ne correspond pas à la confirmation.',
+    'modal.change.password.new.success' => 'Votre mot de passe a été changer avec succès.',
+    'modal.change.password.old.error' => 'Votre mot de passe actuel n\'est pas correct.',
+  ),
+  'ORGBirdBundleSecurity' => 
+  array (
+    'security.profile.firstname' => 'Prénom',
+    'security.profile.lastname' => 'Nom',
+    'security.profile.email' => 'E-mail',
+    'security.profile.attributes' => 'Attributs',
+    'security.profile.username' => 'Nom d\'utilisateur',
+    'security.profile.roles' => 'Rôles',
+    'security.profile.lastlogin' => 'Dernière connexion',
+    'security.profile.save' => 'Enregistrer',
+    'security.profile.language' => 'Langue',
+    'security.profile.layout' => 'Interface principal',
+    'security.profile.edit' => 'Editer',
   ),
   'messages' => 
   array (

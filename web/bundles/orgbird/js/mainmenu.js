@@ -201,22 +201,26 @@ function setupMainMenu(options){
             if(_old == '') {
                 modal.showAlert(language['modal.change.password.old.empty'], Modal.Alert.WARNING);
             }else if(_new == '' || _repeat == ''){
-                alert('New password is empty');
+                modal.showAlert(language['modal.change.password.new.empty'], Modal.Alert.WARNING);
             }else if (_new != _repeat){
-                alert('New != Repeat');
+                modal.showAlert(language['modal.change.password.new.confirm'], Modal.Alert.WARNING);
             }else {
                 $.when(
                     changePassword(url['bird-change-password'],_old,_new)
                 ).then(function (result) {
                     if(result.return){
-                        modal.showAlert('test',Modal.Alert.SUCCESS);
+                        modal.showAlert(language['modal.change.password.new.success'],Modal.Alert.SUCCESS);
+                        sleep(5000).then(() => {modal.close()});
                     }else {
-                        modal.showAlert('Error',Modal.Alert.WARNING);
+                        modal.showAlert(language['modal.change.password.old.error'],Modal.Alert.WARNING);
                     };
-                });    
-            }
-        });
+                });
 
+            }
+            $('#old').val('');
+            $('#new').val('');
+            $('#repeat').val('');
+        });
 
         $('#modalMessage_1').on('click', function () {
             modal.close();
@@ -281,4 +285,8 @@ function changePassword(url, currentPassword, newPassword){
     });
     
     return result;
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
