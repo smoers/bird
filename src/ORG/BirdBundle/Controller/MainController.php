@@ -47,6 +47,9 @@ class MainController extends Controller
             'loginAs' => $user->getLastname().", ".$user->getFirstname(),
             'attributes' => $user->getAttributes(),
         );
+
+        //$this->get('session')->set('_locale', $this->login['attributes']['language']);
+
     }
 
 
@@ -57,7 +60,13 @@ class MainController extends Controller
 	public function indexAction(Request $request){
 
 	    $menuDisabledTwig = new MenuDisabledTwig();
-		return $this->render('ORGBirdBundle:Main:Main.html.twig',array('title' => 'main.title', 'menudisabled' => $menuDisabledTwig, 'loginas' => $this->login['loginAs']));
+
+		return $this->render('ORGBirdBundle:Main:Main.html.twig',array(
+		    'title' => 'main.title',
+            'menudisabled' => $menuDisabledTwig,
+            'loginas' => $this->login['loginAs'],
+            'layout' => $this->login['attributes']['layout'],
+        ));
 
 	}
 

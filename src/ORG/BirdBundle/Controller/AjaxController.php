@@ -76,7 +76,15 @@ class AjaxController extends Controller
                     $nodes = new NodeCycleBookBuilder($result);
                     $nodes->build();
                     return new JsonResponse($nodes->getForJson());
-
+                    break;
+                case 'password_validation':
+                    $pattern = $this->getParameter('password_validation_regex');
+                    $pass = $request->get('password');
+                    $return = false;
+                    if(preg_match($pattern,$pass)){
+                        $return = true;
+                    }
+                    return new JsonResponse(array('isValid' => $return));
             }
         }
 
